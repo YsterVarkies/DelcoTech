@@ -1,0 +1,63 @@
+SCHOTECH IT SOLUTIONS — WEBSITE REDESIGN
+=======================================
+
+QUICK START
+-----------
+Open index.html in a browser. No npm, build tools, API keys or backend needed.
+To put it online, upload the CONTENTS of the mywebsite folder to your hosting's
+public_html folder (or deploy the folder to any static-site host).
+
+IMPORTANT — BEFORE THE WEBSITE GOES LIVE
+----------------------------------------
+1. Open script.js in any text editor.
+2. Find the CONFIG object at the top and set:
+     whatsapp: '27XXXXXXXXX'  (actual WhatsApp business number, digits only)
+     email: 'you@yourdomain.co.za' (an actual monitored inbox)
+   Either one is enough, but both is recommended. The original site included
+   the dummy WhatsApp number 27820000000 and example email hello@deltech.co.za.
+   Neither is assumed genuine. This redesign intentionally leaves them blank.
+3. Verify that the listed prices, packages, 50% deposit, two revision rounds,
+   VAT statement and service commitments reflect your actual business terms.
+4. Verify SchoTech IT Solutions is the correct brand and registered trading name.
+5. Test sending a full enquiry on a mobile phone and a desktop browser.
+6. Replace or remove any copy that does not reflect the services actually offered.
+7. Confirm you have a suitable privacy notice for how customer enquiries are
+   handled, as applicable under South African POPIA rules.
+
+CHANGING THE SITE
+-----------------
+Content, pricing, service descriptions, steps and contact details: script.js
+Design, responsive layout, colours and typography: style.css
+Page structure, headings, FAQ and metadata: index.html
+Tab icon: assets/favicon.svg
+
+HOW ENQUIRIES WORK
+------------------
+The contact form is designed for a static website without a server:
+- With a real WhatsApp number configured, it opens WhatsApp with a prepared
+  message. The visitor must press Send in WhatsApp to finish.
+- Without WhatsApp, with a valid email configured, it opens the visitor's
+  email app with a prepared message. They must send it to finish.
+- With neither configured, it shows a preview/copy-only message. It will NOT
+  send visitors to the original placeholder contact details or falsely claim
+  the enquiry was submitted.
+
+The form does not store entries or transmit data to a server. For reliable
+server-side submissions, integrate a trusted form provider or your own backend.
+
+ACCESSIBILITY AND MAINTENANCE
+-----------------------------
+Includes skip link, labelled form fields, keyboard-operated mobile menu,
+accessible focus states, responsive design, native FAQ disclosure controls,
+reduced-motion support and basic search/social metadata.
+
+Fonts use Google Fonts when online; system fonts are used offline.
+There are no external JavaScript dependencies.
+
+FILES
+-----
+index.html       Homepage and sections
+style.css        Full responsive design
+script.js        Editable site content and interactions
+assets/favicon.svg  Site icon
+README.txt       This setup guide
