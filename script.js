@@ -22,8 +22,8 @@ const CONFIG = {
     {title:'Hosting & care',text:'Keep your website online, updated and in good hands with ongoing maintenance.',kind:'shield',type:'Hosting and maintenance'}
   ],
   builds: [
-    {title:'Starter',price:'From R3,000',note:'once-off',text:'A clean, professional home on the web.',items:['3–5 page business website','Mobile-friendly design','Easy ways for clients to contact you'],type:'Business website'},
-    {title:'Business',price:'From R8,000',note:'once-off',text:'More functionality as your business grows.',items:['Extra features and API integrations','An admin area you can use','Built around your day-to-day needs'],featured:true,type:'Business website'},
+    {title:'Starter',price:'From R4,500',note:'once-off',text:'A clean, professional home on the web.',items:['3–5 page business website','Mobile-friendly design','Easy ways for clients to contact you'],type:'Business website'},
+    {title:'Business',price:'From R10,000',note:'once-off',text:'More functionality as your business grows.',items:['Extra features and API integrations','An admin area you can use','Built around your day-to-day needs'],featured:true,type:'Business website'},
     {title:'Custom',price:'Custom quote',note:'priced per project',text:'A solution built for a specific challenge.',items:['Purpose-built software or tools','Features matched to your workflow','Scope and pricing agreed upfront'],type:'Custom software'}
   ],
   aiBuilds: [
