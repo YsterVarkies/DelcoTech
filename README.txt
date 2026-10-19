@@ -16,7 +16,7 @@ IMPORTANT — BEFORE THE WEBSITE GOES LIVE
    Either one is enough, but both is recommended. The original site included
    the dummy WhatsApp number 27820000000 and example email hello@deltech.co.za.
    Neither is assumed genuine. This redesign intentionally leaves them blank.
-3. Verify that the listed prices, packages, 50% deposit, two revision rounds,
+3. Verify that the monthly plan prices, custom-quote cards, 50% deposit, two revision rounds,
    VAT statement and service commitments reflect your actual business terms.
 4. Verify DelScoTech Software & AI Solutions is the correct brand and registered trading name.
 5. Test sending a full enquiry on a mobile phone and a desktop browser.

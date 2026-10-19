@@ -11,8 +11,8 @@ const CONFIG = {
   whatsapp: '', // REQUIRED FOR WHATSAPP: actual number, no +, spaces or brackets
   email: '',    // REQUIRED FOR EMAIL: actual inbox, e.g. hello@yourdomain.co.za
   about: 'DelScoTech Software & AI Solutions builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
-  pricingIntro: 'Know what you’re paying for before work begins. Start with a build package, add AI if it fits your business, then choose the ongoing support that suits you.',
-  pricingNote: 'Prices are starting points, not final quotes, and exclude VAT where applicable. AI features have monthly running costs (usage and monitoring), quoted separately before you commit. The final scope, price and timeline are confirmed in writing before work begins.',
+  pricingIntro: 'Every project is different, so we quote each one around your goals and budget. You’ll get a clear written quote before any work begins, with optional monthly care plans to keep things running afterwards.',
+  pricingNote: 'Project prices are quoted individually, and monthly plan prices exclude VAT where applicable. AI features have monthly running costs (usage and monitoring), quoted separately before you commit. The final scope, price and timeline are confirmed in writing before work begins.',
   services: [
     {title:'Custom software',text:'Practical dashboards and tools that cut down repetitive admin and fit your workflow.',kind:'software',type:'Custom software'},
     {title:'Custom AI',text:'AI built around your business: tools that read documents, spot patterns or take repetitive work off your hands.',kind:'ai',type:'AI chatbot or custom AI'},
@@ -21,15 +21,12 @@ const CONFIG = {
     {title:'API integration',text:'Connect your website or software to the other tools you use, or build a custom API so your systems can talk to each other.',kind:'api',type:'API integration'},
     {title:'Hosting & care',text:'Keep your website online, updated and in good hands with ongoing maintenance.',kind:'shield',type:'Hosting and maintenance'}
   ],
+  // Project prices are not shown publicly: each group is a single "custom quote" card.
   builds: [
-    {title:'Starter',price:'From R4,500',note:'once-off',text:'A clean, professional home on the web.',items:['3–5 page business website','Mobile-friendly design','Easy ways for clients to contact you'],type:'Business website'},
-    {title:'Business',price:'From R10,000',note:'once-off',text:'More functionality as your business grows.',items:['Extra features and API integrations','An admin area you can use','Built around your day-to-day needs'],featured:true,type:'Business website'},
-    {title:'Custom',price:'Custom quote',note:'priced per project',text:'A solution built for a specific challenge.',items:['Purpose-built software or tools','Features matched to your workflow','Scope and pricing agreed upfront'],type:'Custom software'}
+    {quote:true,title:'Get a custom quote',text:'Websites, business systems and custom software are all quoted around what you need. Tell us your goals and budget and we’ll recommend the right fit.',items:['Designed and built around your business','Features, pages and integrations to suit you','A clear written quote before any work begins'],type:'Business website',message:'I’d like a custom quote for a website or business system.'}
   ],
   aiBuilds: [
-    {title:'AI chatbot',price:'From R5,000',note:'once-off',text:'An assistant that answers customer questions on your website.',items:['Answers from your own business information','Fits into your existing website','Hands over to you when it is unsure'],type:'AI chatbot or custom AI'},
-    {title:'AI assistant',price:'From R15,000',note:'once-off',text:'An assistant that does things, not just answers questions.',items:['Connects to your existing systems through APIs','Rules you control for what it may do','Tested on tricky and unexpected questions'],featured:true,type:'AI chatbot or custom AI'},
-    {title:'Custom AI',price:'Custom quote',note:'priced per project',text:'AI built for a specific problem in your business.',items:['Document, data or prediction tools','Scope and costs agreed upfront','Ongoing AI care plan available'],type:'AI chatbot or custom AI'}
+    {quote:true,title:'Get a custom quote',text:'Chatbots, assistants and custom AI are quoted around the problem you want solved. Tell us your goals and budget and we’ll recommend the right fit.',items:['From simple chatbots to custom AI tools','Built on your own business information','Scope and monthly running costs explained upfront'],type:'AI chatbot or custom AI',message:'I’d like a custom quote for an AI chatbot or custom AI.'}
   ],
   plans: [
     {title:'Hosting',price:'R250',note:'per month',items:['Hosting and domain renewal','Daily backups','SSL security'],type:'Hosting and maintenance'},
@@ -75,16 +72,22 @@ function renderServices(){
   });
 }
 function renderPrices(source,targetId){
+  const isPlan=source===CONFIG.plans;
   source.forEach(item=>{
-    const card=element('article','pricing-card'+(item.featured?' featured':''));
-    if(item.featured)card.append(element('div','popular','MOST POPULAR'));
-    const title=element('h4','',item.title),price=element('strong','price'+(item.price.length>12?' price-small':''),item.price),billing=element('p','billing',item.note);
-    card.append(title,price,billing);
-    if(item.text)card.append(element('p','package-summary',item.text));
-    const list=element('ul','included');item.items.forEach(line=>list.append(element('li','',line)));card.append(list);
-    const link=element('a','price-button',source===CONFIG.plans?'Enquire about this plan ↗':'Choose this package ↗');link.href='#contact';
-    link.addEventListener('click',()=>{const details=$('project-details');$('project-type').value=item.type;if(!details.value.trim())details.value='I’m interested in '+item.title+(source===CONFIG.plans?' monthly plan':' package')+'. Please send me a quote.';});
-    card.append(link);$(targetId).append(card);
+    const card=element('article','pricing-card'+(item.quote?' quote-card featured':(item.featured?' featured':'')));
+    const list=element('ul','included');item.items.forEach(line=>list.append(element('li','',line)));
+    const link=element('a','price-button',item.quote?'Request your quote ↗':(isPlan?'Enquire about this plan ↗':'Choose this package ↗'));link.href='#contact';
+    link.addEventListener('click',()=>{const details=$('project-details');$('project-type').value=item.type;if(!details.value.trim())details.value=item.quote?item.message:'I’m interested in '+item.title+(isPlan?' monthly plan':' package')+'. Please send me a quote.';});
+    if(item.quote){
+      const copy=element('div','quote-copy'),actions=element('div','quote-actions');
+      copy.append(element('h4','',item.title),element('p','package-summary',item.text));actions.append(list,link);card.append(copy,actions);
+    }else{
+      if(item.featured)card.append(element('div','popular','MOST POPULAR'));
+      card.append(element('h4','',item.title),element('strong','price'+(item.price.length>12?' price-small':''),item.price),element('p','billing',item.note));
+      if(item.text)card.append(element('p','package-summary',item.text));
+      card.append(list,link);
+    }
+    $(targetId).append(card);
   });
 }
 function renderSteps(){CONFIG.steps.forEach((s,i)=>{const row=element('li');const number=element('span','process-number',String(i+1).padStart(2,'0'));const details=element('div','process-details');details.append(element('strong','',s.title),element('p','',s.text));row.append(number,details);$('steps-list').append(row);});}
