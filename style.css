@@ -1,4 +1,4 @@
-/* DelTechIT — responsive marketing site. Edit brand colours here. */
+/* DeliTech — responsive marketing site. Edit brand colours here. */
 :root{--ink:#0c1b24;--ink-2:#132731;--sky:#7cc8f6;--sky-deep:#4fb0ee;--cream:#f3f7fb;--white:#fff;--text:#16272c;--muted:#66747a;--line:#e1e8ee;--shadow:0 25px 70px rgba(10,27,33,.12);--head:'Plus Jakarta Sans',system-ui,sans-serif;--body:'DM Sans',system-ui,sans-serif}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px}
@@ -12,7 +12,7 @@ a{color:inherit}button,input,textarea,select{font:inherit}button{cursor:pointer}
 .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
 .brand-symbol{height:42px;width:42px;display:grid;place-items:center;position:relative;color:var(--ink);background:var(--sky);border-radius:12px;transform:rotate(-7deg)}
 .brand-symbol>span{font:800 27px/1 var(--head);letter-spacing:-.08em;transform:rotate(7deg)}.brand-symbol i{position:absolute;width:7px;height:7px;border-radius:50%;right:-3px;top:-3px;background:#fff}
-.brand-wordmark{display:flex;flex-direction:column;gap:1px;line-height:1.1}.brand-wordmark strong{font:800 19px/1.2 var(--head);letter-spacing:-.045em}.serif-i{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-style:normal;font-size:1.1em;line-height:1;letter-spacing:0;padding:0 .04em} /* the serif I in DelTechIT */
+.brand-wordmark{display:flex;flex-direction:column;gap:1px;line-height:1.1}.brand-wordmark strong{font:800 19px/1.2 var(--head);letter-spacing:-.045em}.serif-i{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-style:normal;font-size:1.1em;line-height:1;letter-spacing:0;padding:0 .04em} /* the serif I in DeliTech */
 .brand-wordmark small{font:700 8px/1.4 var(--head);letter-spacing:.32em;color:var(--sky)}
 .main-nav{display:flex;gap:33px;align-items:center}.main-nav>a{color:rgba(255,255,255,.78);font-size:14px;text-decoration:none;font-weight:600;transition:color .2s}.main-nav>a:hover{color:var(--sky)}.main-nav .nav-cta{border:1px solid rgba(124,200,246,.65);padding:11px 19px;border-radius:8px;color:var(--sky);margin-left:8px;display:inline-flex;align-items:center;gap:15px}.main-nav .nav-cta:hover{background:var(--sky);color:var(--ink)}.menu-toggle{display:none}
 .dark-section{background:var(--ink);color:#fff;position:relative;overflow:hidden}

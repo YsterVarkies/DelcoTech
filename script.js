@@ -102,13 +102,13 @@ function configureContact(){
   else{button.firstChild.textContent='Prepare my enquiry ';help.textContent='Preview mode: the site owner needs to add a WhatsApp number or email before enquiries can be sent.';}
   return channels;
 }
-function prepareMessage(data){return 'Hi DelTechIT!\n\nMy name is '+data.get('name').trim()+'.\nContact: '+data.get('contact').trim()+'\nInterested in: '+data.get('project')+'\n\nProject details:\n'+data.get('message').trim();}
-/* Writes text into a page element and keeps every "DelTechIT" as one unit,
+function prepareMessage(data){return 'Hi DeliTech!\n\nMy name is '+data.get('name').trim()+'.\nContact: '+data.get('contact').trim()+'\nInterested in: '+data.get('project')+'\n\nProject details:\n'+data.get('message').trim();}
+/* Writes text into a page element and keeps every "DeliTech" as one unit,
    kept as a helper so brand text stays consistent. */
 function setBrandText(node,text){
   node.textContent='';
-  text.split('DelTechIT').forEach((part,i)=>{
-    if(i>0)node.append('DelTechIT');
+  text.split('DeliTech').forEach((part,i)=>{
+    if(i>0)node.append('DeliTech');
     node.append(part);
   });
 }
@@ -124,7 +124,7 @@ function setupEnquiry(){
     if(!valid){updateStatus('Please complete your name, contact details and project description.',true);form.querySelector('.invalid').focus();return;}
     const data=new FormData(form),message=prepareMessage(data);
     if(channels.whatsapp){const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(message);window.location.href=url;updateStatus('Your WhatsApp message is ready. Please press Send in WhatsApp to finish.');}
-    else if(channels.email){const subject='New DelTechIT project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
+    else if(channels.email){const subject='New DeliTech project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
     else{$('copy-message').value=message;$('copy-fallback').hidden=false;updateStatus('Preview only: the site owner has not added real contact details yet. Your message is ready to copy.');}
   });
   ['name','contact-info','project-details'].forEach(id=>$(id).addEventListener('input',()=>$(id).classList.remove('invalid')));
