@@ -6,11 +6,11 @@
  * email to a real, verified inbox before publishing the site.
  */
 const CONFIG = {
-  name: 'DeliTech IT Solutions',
+  name: 'DelScoTech Software & AI Solutions',
   subheadline: 'We create good-looking websites, smarter business systems, custom AI and reliable ongoing support. Built around what you actually need.',
   whatsapp: '', // REQUIRED FOR WHATSAPP: actual number, no +, spaces or brackets
   email: '',    // REQUIRED FOR EMAIL: actual inbox, e.g. hello@yourdomain.co.za
-  about: 'DeliTech IT Solutions builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
+  about: 'DelScoTech Software & AI Solutions builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
   pricingIntro: 'Know what you’re paying for before work begins. Start with a build package, add AI if it fits your business, then choose the ongoing support that suits you.',
   pricingNote: 'Prices are starting points, not final quotes, and exclude VAT where applicable. AI features have monthly running costs (usage and monitoring), quoted separately before you commit. The final scope, price and timeline are confirmed in writing before work begins.',
   services: [
@@ -102,13 +102,13 @@ function configureContact(){
   else{button.firstChild.textContent='Prepare my enquiry ';help.textContent='Preview mode: the site owner needs to add a WhatsApp number or email before enquiries can be sent.';}
   return channels;
 }
-function prepareMessage(data){return 'Hi DeliTech!\n\nMy name is '+data.get('name').trim()+'.\nContact: '+data.get('contact').trim()+'\nInterested in: '+data.get('project')+'\n\nProject details:\n'+data.get('message').trim();}
-/* Writes text into a page element and keeps every "DeliTech" as one unit,
+function prepareMessage(data){return 'Hi DelScoTech!\n\nMy name is '+data.get('name').trim()+'.\nContact: '+data.get('contact').trim()+'\nInterested in: '+data.get('project')+'\n\nProject details:\n'+data.get('message').trim();}
+/* Writes text into a page element and keeps every "DelScoTech" as one unit,
    kept as a helper so brand text stays consistent. */
 function setBrandText(node,text){
   node.textContent='';
-  text.split('DeliTech').forEach((part,i)=>{
-    if(i>0)node.append('DeliTech');
+  text.split('DelScoTech').forEach((part,i)=>{
+    if(i>0)node.append('DelScoTech');
     node.append(part);
   });
 }
@@ -124,7 +124,7 @@ function setupEnquiry(){
     if(!valid){updateStatus('Please complete your name, contact details and project description.',true);form.querySelector('.invalid').focus();return;}
     const data=new FormData(form),message=prepareMessage(data);
     if(channels.whatsapp){const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(message);window.location.href=url;updateStatus('Your WhatsApp message is ready. Please press Send in WhatsApp to finish.');}
-    else if(channels.email){const subject='New DeliTech project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
+    else if(channels.email){const subject='New DelScoTech project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
     else{$('copy-message').value=message;$('copy-fallback').hidden=false;updateStatus('Preview only: the site owner has not added real contact details yet. Your message is ready to copy.');}
   });
   ['name','contact-info','project-details'].forEach(id=>$(id).addEventListener('input',()=>$(id).classList.remove('invalid')));

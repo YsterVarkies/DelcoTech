@@ -1,4 +1,4 @@
-DELITECH IT SOLUTIONS — WEBSITE
+DELITECH SOFTWARE & AI SOLUTIONS — WEBSITE
 ===============================
 
 QUICK START
@@ -18,7 +18,7 @@ IMPORTANT — BEFORE THE WEBSITE GOES LIVE
    Neither is assumed genuine. This redesign intentionally leaves them blank.
 3. Verify that the listed prices, packages, 50% deposit, two revision rounds,
    VAT statement and service commitments reflect your actual business terms.
-4. Verify DeliTech IT Solutions is the correct brand and registered trading name.
+4. Verify DelScoTech Software & AI Solutions is the correct brand and registered trading name.
 5. Test sending a full enquiry on a mobile phone and a desktop browser.
 6. Replace or remove any copy that does not reflect the services actually offered.
 7. Confirm you have a suitable privacy notice for how customer enquiries are
