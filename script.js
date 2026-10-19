@@ -1,16 +1,16 @@
 /*
- * SCHOTECH SITE CONFIGURATION
+ * DELITECH SITE CONFIGURATION
  * Edit business details and offerings here. Contact addresses are intentionally
  * left blank because the phone/email in the original site were placeholders.
  * Set whatsapp to real international digits (example: 27821234567) and/or
  * email to a real, verified inbox before publishing the site.
  */
 const CONFIG = {
-  name: 'SchoTech IT Solutions',
+  name: 'DelTechIT IT Solutions',
   subheadline: 'We create good-looking websites, smarter business systems, custom AI and reliable ongoing support. Built around what you actually need.',
   whatsapp: '', // REQUIRED FOR WHATSAPP: actual number, no +, spaces or brackets
   email: '',    // REQUIRED FOR EMAIL: actual inbox, e.g. hello@yourdomain.co.za
-  about: 'SchoTech builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
+  about: 'DelTechIT builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
   pricingIntro: 'Know what you’re paying for before work begins. Start with a build package, add AI if it fits your business, then choose the ongoing support that suits you.',
   pricingNote: 'Prices are starting points, not final quotes, and exclude VAT where applicable. AI features have monthly running costs (usage and monitoring), quoted separately before you commit. The final scope, price and timeline are confirmed in writing before work begins.',
   services: [
@@ -102,7 +102,17 @@ function configureContact(){
   else{button.firstChild.textContent='Prepare my enquiry ';help.textContent='Preview mode: the site owner needs to add a WhatsApp number or email before enquiries can be sent.';}
   return channels;
 }
-function prepareMessage(data){return 'Hi SchoTech!\n\nMy name is '+data.get('name').trim()+'.\nContact: '+data.get('contact').trim()+'\nInterested in: '+data.get('project')+'\n\nProject details:\n'+data.get('message').trim();}
+function prepareMessage(data){return 'Hi DelTechIT!\n\nMy name is '+data.get('name').trim()+'.\nContact: '+data.get('contact').trim()+'\nInterested in: '+data.get('project')+'\n\nProject details:\n'+data.get('message').trim();}
+/* Writes text into a page element and keeps every "DelTechIT" as one unit,
+   kept as a helper so brand text stays consistent. */
+function setBrandText(node,text){
+  node.textContent='';
+  text.split('DelTechIT').forEach((part,i)=>{
+    if(i>0)node.append('DelTechIT');
+    node.append(part);
+  });
+}
+
 function updateStatus(message,isError=false){const status=$('form-status');status.textContent=message;status.classList.toggle('error',isError);status.hidden=false;}
 
 function setupEnquiry(){
@@ -114,7 +124,7 @@ function setupEnquiry(){
     if(!valid){updateStatus('Please complete your name, contact details and project description.',true);form.querySelector('.invalid').focus();return;}
     const data=new FormData(form),message=prepareMessage(data);
     if(channels.whatsapp){const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(message);window.location.href=url;updateStatus('Your WhatsApp message is ready. Please press Send in WhatsApp to finish.');}
-    else if(channels.email){const subject='New SchoTech project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
+    else if(channels.email){const subject='New DelTechIT project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
     else{$('copy-message').value=message;$('copy-fallback').hidden=false;updateStatus('Preview only: the site owner has not added real contact details yet. Your message is ready to copy.');}
   });
   ['name','contact-info','project-details'].forEach(id=>$(id).addEventListener('input',()=>$(id).classList.remove('invalid')));
@@ -134,7 +144,7 @@ function setupMobileNavigation(){
   window.addEventListener('resize',()=>{if(window.innerWidth>680)close();});
 }
 function setupReveal(){
-  const cards=document.querySelectorAll('.service-card,.pricing-card');
+  const items=document.querySelectorAll('.service-card,.pricing-card,.process-heading');
   if(!('IntersectionObserver' in window))return;
   const observer=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
@@ -142,16 +152,16 @@ function setupReveal(){
       entry.target.classList.add('in-view');observer.unobserve(entry.target);
     });
   },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
-  cards.forEach(card=>{
-    const index=[...card.parentElement.children].indexOf(card);
-    card.style.setProperty('--reveal-delay',(index%3)*0.12+'s');
-    card.classList.add('reveal');observer.observe(card);
+  items.forEach(item=>{
+    const index=[...item.parentElement.children].indexOf(item);
+    item.style.setProperty('--reveal-delay',(index%3)*0.12+'s');
+    item.classList.add('reveal');observer.observe(item);
   });
 }
 function init(){
-  document.querySelectorAll('[data-bind]').forEach(node=>{const value=CONFIG[node.dataset.bind];if(typeof value==='string')node.textContent=value;});
+  document.querySelectorAll('[data-bind]').forEach(node=>{const value=CONFIG[node.dataset.bind];if(typeof value==='string')setBrandText(node,value);});
   renderServices();renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();setupReveal();
-  $('footer-text').textContent='© '+new Date().getFullYear()+' '+CONFIG.name+'. All rights reserved.';
+  setBrandText($('footer-text'),'© '+new Date().getFullYear()+' '+CONFIG.name+'. All rights reserved.');
   setupMobileNavigation();setupEnquiry();
 }
 init();
