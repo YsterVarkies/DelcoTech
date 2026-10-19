@@ -48,3 +48,8 @@ a{color:inherit}button,input,textarea,select{font:inherit}button{cursor:pointer}
 }
 @media(max-width:390px){.container{width:calc(100% - 32px)}.hero h1{font-size:39px}.hero-art{height:310px}.website-window{transform:rotate(-3deg) scale(.78);width:115%;flex-shrink:0}.floating-note{scale:.77}.note-top{right:-20px;top:0}.note-bottom{left:-18px;bottom:-4px}.service-grid{grid-template-columns:1fr}.service-card{min-height:215px}.service-icon{margin-bottom:13px}.contact-card{padding:25px 18px}.hero-actions .button{padding:0 15px;gap:9px;font-size:11px}.hero-footnotes{gap:9px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+/* Scroll reveal for service and pricing cards (first view only) */
+.reveal{opacity:0}
+.reveal.in-view{opacity:1;animation:reveal-up .7s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0s) backwards}
+@keyframes reveal-up{from{opacity:0;transform:translateY(40px) scale(.94)}to{opacity:1;transform:none}}

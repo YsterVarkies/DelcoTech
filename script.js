@@ -133,9 +133,24 @@ function setupMobileNavigation(){
   document.addEventListener('click',e=>{if(!toggle.contains(e.target)&&!nav.contains(e.target))close();});
   window.addEventListener('resize',()=>{if(window.innerWidth>680)close();});
 }
+function setupReveal(){
+  const cards=document.querySelectorAll('.service-card,.pricing-card');
+  if(!('IntersectionObserver' in window))return;
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      entry.target.classList.add('in-view');observer.unobserve(entry.target);
+    });
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  cards.forEach(card=>{
+    const index=[...card.parentElement.children].indexOf(card);
+    card.style.setProperty('--reveal-delay',(index%3)*0.12+'s');
+    card.classList.add('reveal');observer.observe(card);
+  });
+}
 function init(){
   document.querySelectorAll('[data-bind]').forEach(node=>{const value=CONFIG[node.dataset.bind];if(typeof value==='string')node.textContent=value;});
-  renderServices();renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();
+  renderServices();renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();setupReveal();
   $('footer-text').textContent='© '+new Date().getFullYear()+' '+CONFIG.name+'. All rights reserved.';
   setupMobileNavigation();setupEnquiry();
 }
