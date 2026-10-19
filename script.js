@@ -6,11 +6,11 @@
  * email to a real, verified inbox before publishing the site.
  */
 const CONFIG = {
-  name: 'DelTechIT IT Solutions',
+  name: 'DeliTech IT Solutions',
   subheadline: 'We create good-looking websites, smarter business systems, custom AI and reliable ongoing support. Built around what you actually need.',
   whatsapp: '', // REQUIRED FOR WHATSAPP: actual number, no +, spaces or brackets
   email: '',    // REQUIRED FOR EMAIL: actual inbox, e.g. hello@yourdomain.co.za
-  about: 'DelTechIT builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
+  about: 'DeliTech IT Solutions builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
   pricingIntro: 'Know what you’re paying for before work begins. Start with a build package, add AI if it fits your business, then choose the ongoing support that suits you.',
   pricingNote: 'Prices are starting points, not final quotes, and exclude VAT where applicable. AI features have monthly running costs (usage and monitoring), quoted separately before you commit. The final scope, price and timeline are confirmed in writing before work begins.',
   services: [
