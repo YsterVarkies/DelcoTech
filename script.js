@@ -29,9 +29,9 @@ const CONFIG = {
     {quote:true,title:'Get a custom quote',text:'Chatbots, assistants and custom AI are quoted around the problem you want solved. Tell us your goals and budget and we’ll recommend the right fit.',items:['From simple chatbots to custom AI tools','Built on your own business information','Scope and monthly running costs explained upfront'],type:'AI chatbot or custom AI',message:'I’d like a custom quote for an AI chatbot or custom AI.'}
   ],
   plans: [
-    {title:'Hosting',price:'R250',note:'per month',items:['Hosting and domain renewal','Daily backups','SSL security'],type:'Hosting and maintenance'},
-    {title:'Care',price:'R800',note:'per month',items:['Everything in Hosting','Security updates','Uptime monitoring','2 hours of changes per month'],featured:true,type:'Hosting and maintenance'},
-    {title:'Growth',price:'R1,500',note:'per month',items:['Everything in Care','Content updates','Monthly visitor report','Priority support'],type:'Hosting and maintenance'}
+    {title:'Hosting',price:'R300',note:'per month',items:['Hosting and domain renewal','Daily backups','SSL security'],type:'Hosting and maintenance'},
+    {title:'Care',price:'R1,500',note:'per month',items:['Everything in Hosting','Security updates','Uptime monitoring','3 hours of changes per month'],featured:true,type:'Hosting and maintenance'},
+    {title:'Growth',price:'R2,250',note:'per month',items:['Everything in Care','Content updates','Monthly visitor report','Priority support','5 hours of changes per month'],type:'Hosting and maintenance'}
   ],
   steps: [
     {title:'Tell us your idea',text:'We start with a free conversation about your goals and what you need.'},
