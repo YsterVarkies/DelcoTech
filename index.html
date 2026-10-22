@@ -15,7 +15,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    /* Hide the hero for a moment so the GSAP intro can play it in; shown anyway after 2.5s. */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var root = document.documentElement;
+      root.classList.add('motion-pending');
+      setTimeout(function () { root.classList.remove('motion-pending'); }, 2500);
+    })();
+  </script>
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="script.js" defer></script>
+  <script src="motion.js" defer></script>
+  <script type="module" src="tools3d.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>

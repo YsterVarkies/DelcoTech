@@ -64,7 +64,7 @@ function jumpToContact(type,packageName){
 function renderServices(){
   CONFIG.services.forEach(s=>{
     const card=element('article','service-card');
-    const icon=element('div','service-icon');icon.setAttribute('aria-hidden','true');icon.innerHTML='<svg viewBox="0 0 24 24">'+(icons[s.kind]||icons.website)+'</svg>';
+    const icon=element('div','service-icon');icon.setAttribute('aria-hidden','true');icon.dataset.kind=s.kind;icon.innerHTML='<svg viewBox="0 0 24 24">'+(icons[s.kind]||icons.website)+'</svg>';
     const title=element('h3','',s.title);const summary=element('p','',s.text);
     const link=element('a','service-link');link.href='#contact';link.textContent='Let’s talk';link.append(element('span','','↗'));
     link.addEventListener('click',()=>{$('project-type').value=s.type;});
@@ -146,24 +146,10 @@ function setupMobileNavigation(){
   document.addEventListener('click',e=>{if(!toggle.contains(e.target)&&!nav.contains(e.target))close();});
   window.addEventListener('resize',()=>{if(window.innerWidth>680)close();});
 }
-function setupReveal(){
-  const items=document.querySelectorAll('.service-card,.pricing-card,.process-heading');
-  if(!('IntersectionObserver' in window))return;
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(!entry.isIntersecting)return;
-      entry.target.classList.add('in-view');observer.unobserve(entry.target);
-    });
-  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
-  items.forEach(item=>{
-    const index=[...item.parentElement.children].indexOf(item);
-    item.style.setProperty('--reveal-delay',(index%3)*0.12+'s');
-    item.classList.add('reveal');observer.observe(item);
-  });
-}
+/* Scroll reveals, hovers and mouse effects live in motion.js (GSAP). */
 function init(){
   document.querySelectorAll('[data-bind]').forEach(node=>{const value=CONFIG[node.dataset.bind];if(typeof value==='string')setBrandText(node,value);});
-  renderServices();renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();setupReveal();
+  renderServices();renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();
   setBrandText($('footer-text'),'© '+new Date().getFullYear()+' '+CONFIG.name+'. All rights reserved.');
   setupMobileNavigation();setupEnquiry();
 }

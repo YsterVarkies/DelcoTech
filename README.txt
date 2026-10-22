@@ -52,12 +52,38 @@ accessible focus states, responsive design, native FAQ disclosure controls,
 reduced-motion support and basic search/social metadata.
 
 Fonts use Google Fonts when online; system fonts are used offline.
-There are no external JavaScript dependencies.
+
+MOTION (GSAP)
+-------------
+All animation lives in motion.js and uses GSAP 3.15 (gsap, ScrollTrigger and
+SplitText), copied into assets/vendor/ so the live site does not need npm.
+- Intro: the header, headline (line by line), buttons and the browser mock
+  play in when the page opens.
+- Mouse: the browser mock tilts toward the pointer, the floating notes, orbits
+  and sparks drift at different depths, a soft light follows the cursor, cards
+  tilt with a light under the pointer, and buttons pull toward the cursor.
+- Scroll: headings rise line by line, cards deal in, prices count up, a line
+  fills down the steps, FAQ answers glide open.
+With "reduce motion" switched on in the operating system, none of this runs
+and the page shows as normal. If the GSAP files fail to load, the page still
+works without the animation.
+
+3D TOOLS (THREE.JS)
+-------------------
+tools3d.js draws a small 3D model on each service card: a laptop (custom
+software), a chip (custom AI), a chat bubble (chatbots), a browser window
+(websites), connected nodes (API) and a shield (hosting & care). They float,
+turn toward the mouse and spin once when a card is hovered. Only models on
+screen are drawn. Without WebGL the original icons are shown instead.
 
 FILES
 -----
 index.html       Homepage and sections
 style.css        Full responsive design
 script.js        Editable site content and interactions
+motion.js        GSAP animations, hover and mouse effects
+tools3d.js       Three.js 3D models on the six service cards
+assets/vendor/three/  Three.js 0.186 (three.module.js and three.core.js)
+assets/vendor/   GSAP library files used by motion.js
 assets/favicon.png  Site icon (DelcoTech logo)
 README.txt       This setup guide

@@ -50,13 +50,6 @@ a{color:inherit}button,input,textarea,select{font:inherit}button{cursor:pointer}
 @media(max-width:390px){.container{width:calc(100% - 32px)}.hero h1{font-size:39px}.hero-art{height:310px}.website-window{transform:rotate(-3deg) scale(.78);width:115%;flex-shrink:0}.floating-note{scale:.77}.note-top{right:-20px;top:0}.note-bottom{left:-18px;bottom:-4px}.service-grid{grid-template-columns:1fr}.service-card{min-height:215px}.service-icon{margin-bottom:13px}.contact-card{padding:25px 18px}.hero-actions .button{padding:0 15px;gap:9px;font-size:11px}.hero-footnotes{gap:9px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 
-/* Scroll reveal for service and pricing cards and the process heading (first view only) */
-.reveal{opacity:0}
-.reveal.in-view{opacity:1;animation:reveal-up .7s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0s) backwards}
-@keyframes reveal-up{from{opacity:0;transform:translateY(40px) scale(.94)}to{opacity:1;transform:none}}
-.process-heading.reveal.in-view{animation-name:reveal-down}
-@keyframes reveal-down{from{opacity:0;transform:translateY(-50px)}to{opacity:1;transform:none}}
-
 /* Single "custom quote" card shown in place of fixed project prices */
 .pricing-card.quote-card{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:20px 56px;align-items:center;min-height:0;padding:34px 36px}
 .quote-card .quote-copy h4{font-size:26px;margin:0 0 12px}
@@ -66,3 +59,55 @@ a{color:inherit}button,input,textarea,select{font:inherit}button{cursor:pointer}
 .quote-card .price-button{margin-top:0;align-self:flex-start;padding:0 28px}
 @media(max-width:930px){.pricing-card.quote-card{grid-template-columns:1fr;padding:28px 26px}}
 @media(max-width:680px){.pricing-card.quote-card{padding:24px 20px}.quote-card .quote-copy h4{font-size:22px}.quote-card .price-button{align-self:stretch}}
+
+/* ===================== Motion layer (driven by motion.js / GSAP) ===================== */
+/* Entrance animations start some things off to the side: never let that scroll the page sideways. */
+body{overflow-x:clip}
+/* Hero waits a moment so the intro can play it in. */
+.motion-pending .hero-copy,.motion-pending .hero-art,.motion-pending .nav-wrap{visibility:hidden}
+/* SplitText line masks: a little room so descenders are not clipped. */
+.line-mask-inner-mask{padding-bottom:.1em;margin-bottom:-.1em}
+
+
+/* Hero: tilting browser window, spotlight that follows the mouse */
+.window-tilt{position:relative;z-index:2;width:min(100%,515px);display:flex;justify-content:center;transform-style:preserve-3d;will-change:transform}
+.window-tilt .website-window{width:100%;flex-shrink:0}
+.hero-spot{position:absolute;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(124,200,246,.13),rgba(124,200,246,0) 62%);pointer-events:none;z-index:-1;opacity:0}
+
+/* Magnetic controls: GSAP moves them, so CSS keeps only colour transitions */
+.magnetic{transition-property:background-color,color,border-color,box-shadow,gap!important}
+.magnetic:hover{transform:none}
+
+/* Cards: 3D tilt plus a light that follows the pointer */
+.service-card,.pricing-card{position:relative;transition-property:background,box-shadow,border-color!important;will-change:transform}
+.service-card:hover,.pricing-card:hover{transform:none}
+.service-card::after,.pricing-card::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(124,200,246,.22),rgba(124,200,246,0) 65%)}
+.service-card:hover::after,.pricing-card:hover::after{opacity:1}
+.service-card>*,.pricing-card>*:not(.popular){position:relative;z-index:1}
+.pricing-card .popular{z-index:2}
+.service-icon{transition:background .3s,color .3s}
+.service-card:hover .service-icon{background:var(--sky);color:var(--ink)}
+
+/* Process: a line that fills as you scroll through the steps */
+.process-list{position:relative}
+.process-track{position:absolute;left:-26px;top:0;bottom:0;width:2px;background:#e1e9f0;border-radius:2px;overflow:hidden}
+.process-fill{position:absolute;inset:0;background:var(--sky);transform:scaleY(0);transform-origin:50% 0}
+.process-number{transition:color .4s}
+.process-list li.is-active .process-number{color:#2f78a8}
+
+/* FAQ answers open with a height animation */
+.faq-items details p{overflow:hidden}
+
+@media(max-width:680px){.process-track{left:-12px}}
+@media(hover:none),(pointer:coarse){.hero-spot{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-spot{display:none}}
+
+/* "what's next." underline grows with the scroll (motion.js sets --underline) */
+.underline-green::after{transform:scaleX(var(--underline,1));transform-origin:0 50%}
+
+/* 3D tool models (tools3d.js) replace the service icons when WebGL is available */
+.service-icon.has-3d{width:96px;height:96px;border-radius:20px;margin-bottom:22px;overflow:visible;position:relative}
+.service-icon.has-3d svg{display:none}
+.service-icon .tool-3d{position:absolute;inset:-14px;width:calc(100% + 28px);height:calc(100% + 28px);display:block;pointer-events:none}
+.service-card:hover .service-icon.has-3d{background:#cfe6f8}
+@media(max-width:390px){.service-icon.has-3d{width:84px;height:84px}}
