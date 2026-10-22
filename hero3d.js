@@ -306,7 +306,11 @@ async function start() {
   rig.add(laptop);
   scene.add(rig);
 
-  const OPEN = -0.24, CLOSED = Math.PI / 2 - 0.02, BASE_TURN = -0.42;
+  /* BASE_TURN sets the idle angle. Keep it modest: the hero-3d canvas only
+     bleeds out of .hero-art by a fixed amount (see style.css), and turning the
+     laptop further toward the mouse on top of a steep base angle pushes its far
+     edge past that bleed, where it gets clipped by the canvas boundary. */
+  const OPEN = -0.24, CLOSED = Math.PI / 2 - 0.02, BASE_TURN = -0.12;
   const state = { lid: CLOSED, fold: 0, turnX: 0, turnY: 0 };
   const pointer = { x: 0, y: 0 };
   let visible = true;

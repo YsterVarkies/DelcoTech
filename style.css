@@ -114,7 +114,7 @@ html,body{overflow-x:clip}
 @media(max-width:390px){.service-icon.has-3d{width:84px;height:84px}}
 
 /* Hero 3D laptop (hero3d.js) replaces the HTML browser mock when WebGL is available */
-.hero-art .hero-3d{position:absolute;left:-110px;right:-80px;top:-90px;bottom:-70px;width:calc(100% + 190px);height:calc(100% + 160px);z-index:2;pointer-events:none}
+.hero-art .hero-3d{position:absolute;left:-110px;right:-100px;top:-90px;bottom:-70px;width:calc(100% + 210px);height:calc(100% + 160px);z-index:2;pointer-events:none}
 /* Below this width the page's own side gutter is only 24-32px: the full bleed
    above gets clipped by .hero's overflow:hidden on its right edge as the laptop
    turns toward the viewer. Shrink the bleed to fit (matches hero3d.js's "roomy"
