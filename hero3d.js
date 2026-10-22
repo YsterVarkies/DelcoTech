@@ -320,7 +320,11 @@ async function start() {
        the laptop (about 3.9 units wide from this angle) would not fit the width. */
     const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
     const fitWidth = 1.95 / (halfH * camera.aspect) * 1.04;
-    const roomy = window.innerWidth >= 1150 && camera.aspect >= 1;
+    /* Below this width the page's own side gutter is too narrow to give the
+       close-up pose room to bleed past its box without the hero's own
+       overflow:hidden clipping it as the laptop turns. Stay zoomed out there
+       (matches the breakpoint on .hero-3d's bleed margin in style.css). */
+    const roomy = window.innerWidth >= 1400 && camera.aspect >= 1;
     const dist = Math.max(roomy ? 6.3 : 8.2, fitWidth);
     camera.position.set(0, 2.5, dist);
     camera.lookAt(lookAt);

@@ -53,7 +53,7 @@ const builders = {
     /* Rests half closed; opens up when the card is hovered. */
     g.userData.hinge = hinge;
     g.userData.lidOpen = -0.28;
-    g.userData.lidRest = reduceMotion ? -0.28 : 0.8;
+    g.userData.lidRest = reduceMotion ? -0.28 : Math.PI / 2 - 0.02;
     hinge.rotation.x = g.userData.lidRest;
     const lid = new THREE.Mesh(extrude(roundedRect(2.2, 1.45, 0.12), 0.06, 0.03), mat(C.ink));
     lid.position.set(0, 0.72, 0);
@@ -257,7 +257,11 @@ function createView(icon, kind) {
       view.hover = 1;
       const gsap = window.gsap;
       if (!gsap) return;
-      if (u.hinge) gsap.to(u.hinge.rotation, { x: u.lidOpen, duration: 0.9, ease: 'power3.out', overwrite: true });
+      if (u.hinge) {
+        /* Once opened by a hover, the laptop stays open for good. */
+        u.stayOpen = true;
+        gsap.to(u.hinge.rotation, { x: u.lidOpen, duration: 0.9, ease: 'power3.out', overwrite: true });
+      }
       if (u.pop) {
         /* A new-message popup: grows from tiny at the tail corner up to full size. */
         gsap.fromTo(u.pop.scale, { x: 0.05, y: 0.05, z: 0.05 }, { x: 1, y: 1, z: 1, duration: 0.8, ease: 'back.out(1.9)', overwrite: true });
@@ -269,10 +273,13 @@ function createView(icon, kind) {
         gsap.killTweensOf(pieces.map((p) => p.m.position));
         gsap.killTweensOf(pieces.map((p) => p.m.scale));
         const tl = gsap.timeline();
-        tl.to(pieces.map((p) => p.m.position), { z: (i) => pieces[i].z + 1.0, duration: 0.32, stagger: 0.06, ease: 'power2.out' }, 0)
-          .to(pieces.map((p) => p.m.scale), { x: 1.35, y: 1.35, z: 1.35, duration: 0.32, stagger: 0.06, ease: 'power2.out' }, 0)
-          .to(pieces.map((p) => p.m.position), { z: (i) => pieces[i].z, duration: 0.6, stagger: 0.05, ease: 'back.out(2.2)' }, 0.4)
-          .to(pieces.map((p) => p.m.scale), { x: 1, y: 1, z: 1, duration: 0.6, stagger: 0.05, ease: 'back.out(2.2)' }, 0.4);
+        /* Kept modest: pushed further forward and scaled up much more, the big
+           "art" circle swells to fill the card in a blue close to the hover
+           background, so the icon briefly reads as a blank blue blob. */
+        tl.to(pieces.map((p) => p.m.position), { z: (i) => pieces[i].z + 0.55, duration: 0.3, stagger: 0.06, ease: 'power2.out' }, 0)
+          .to(pieces.map((p) => p.m.scale), { x: 1.18, y: 1.18, z: 1.18, duration: 0.3, stagger: 0.06, ease: 'power2.out' }, 0)
+          .to(pieces.map((p) => p.m.position), { z: (i) => pieces[i].z, duration: 0.55, stagger: 0.05, ease: 'back.out(2.2)' }, 0.4)
+          .to(pieces.map((p) => p.m.scale), { x: 1, y: 1, z: 1, duration: 0.55, stagger: 0.05, ease: 'back.out(2.2)' }, 0.4);
       }
     });
     card.addEventListener('pointermove', (e) => {
@@ -282,7 +289,7 @@ function createView(icon, kind) {
     });
     card.addEventListener('pointerleave', () => {
       view.hover = 0; view.target.x = 0; view.target.y = 0;
-      if (u.hinge && window.gsap) window.gsap.to(u.hinge.rotation, { x: u.lidRest, duration: 0.8, ease: 'power3.inOut', overwrite: true });
+      if (u.hinge && !u.stayOpen && window.gsap) window.gsap.to(u.hinge.rotation, { x: u.lidRest, duration: 0.8, ease: 'power3.inOut', overwrite: true });
     });
   }
   views.push(view);

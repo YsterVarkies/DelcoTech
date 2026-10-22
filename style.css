@@ -115,6 +115,11 @@ html,body{overflow-x:clip}
 
 /* Hero 3D laptop (hero3d.js) replaces the HTML browser mock when WebGL is available */
 .hero-art .hero-3d{position:absolute;left:-110px;right:-80px;top:-90px;bottom:-70px;width:calc(100% + 190px);height:calc(100% + 160px);z-index:2;pointer-events:none}
+/* Below this width the page's own side gutter is only 24-32px: the full bleed
+   above gets clipped by .hero's overflow:hidden on its right edge as the laptop
+   turns toward the viewer. Shrink the bleed to fit (matches hero3d.js's "roomy"
+   check, so the zoomed-in pose and the bigger bleed only ever appear together). */
+@media(max-width:1399px){.hero-art .hero-3d{left:-50px;right:-18px;top:-45px;bottom:-35px;width:calc(100% + 68px);height:calc(100% + 80px)}}
 .hero-art.is-3d .window-tilt,.hero-art.is-3d .website-window{display:none}
 .hero-art .floating-note{z-index:5}
 /* With the 3D laptop: "Made to stand out" sits in the space left of the screen instead of on top of it */
