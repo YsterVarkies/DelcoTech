@@ -188,8 +188,8 @@
       qa('.service-card').forEach((card) => {
         tiltCard(card, 12);
         const icon = q('.service-icon', card);
-        card.addEventListener('pointerenter', () => gsap.to(icon, { rotation: -10, scale: 1.12, duration: 0.5, ease: 'back.out(2)' }));
-        card.addEventListener('pointerleave', () => gsap.to(icon, { rotation: 0, scale: 1, duration: 0.5, ease: 'power3.out' }));
+        card.addEventListener('pointerenter', () => gsap.to(icon, { scale: 1.1, duration: 0.5, ease: 'back.out(2)' }));
+        card.addEventListener('pointerleave', () => gsap.to(icon, { scale: 1, duration: 0.5, ease: 'power3.out' }));
       });
       qa('.pricing-card:not(.quote-card)').forEach((card) => tiltCard(card, 7));
       qa('.pricing-card.quote-card').forEach((card) => tiltCard(card, 3));

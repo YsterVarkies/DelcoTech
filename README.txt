@@ -72,9 +72,20 @@ works without the animation.
 -------------------
 tools3d.js draws a small 3D model on each service card: a laptop (custom
 software), a chip (custom AI), a chat bubble (chatbots), a browser window
-(websites), connected nodes (API) and a shield (hosting & care). They float,
-turn toward the mouse and spin once when a card is hovered. Only models on
+(websites), connected nodes (API) and a shield (hosting & care). They float and
+turn toward the mouse. On hover the laptop opens, the chat bubble pops up like a
+new message, and the pieces of the browser window pop out and settle back. Only models on
 screen are drawn. Without WebGL the original icons are shown instead.
+
+hero3d.js puts a 3D laptop in the hero. It rises in, opens its lid and boots
+into the mock website (the headline types itself), turns toward the mouse and
+folds a little as you scroll down. The screen is drawn in code at the top of
+hero3d.js (drawScreen), so its text can be changed there. Without WebGL the
+original HTML browser mock is shown instead.
+
+feature3d.js shows the DelcoTech logo in 3D (sky tile, navy D, white dot) in
+the circle of the About section. It spins in when scrolled into view, floats,
+and turns toward the mouse.
 
 FILES
 -----
@@ -83,6 +94,8 @@ style.css        Full responsive design
 script.js        Editable site content and interactions
 motion.js        GSAP animations, hover and mouse effects
 tools3d.js       Three.js 3D models on the six service cards
+hero3d.js        Three.js 3D laptop in the hero
+feature3d.js     Three.js 3D DelcoTech logo in the About circle
 assets/vendor/three/  Three.js 0.186 (three.module.js and three.core.js)
 assets/vendor/   GSAP library files used by motion.js
 assets/favicon.png  Site icon (DelcoTech logo)

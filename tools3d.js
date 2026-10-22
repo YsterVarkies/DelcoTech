@@ -50,7 +50,11 @@ const builders = {
     g.add(base);
     const hinge = new THREE.Group();
     hinge.position.set(0, 0.06, -0.7);
-    hinge.rotation.x = -0.28;
+    /* Rests half closed; opens up when the card is hovered. */
+    g.userData.hinge = hinge;
+    g.userData.lidOpen = -0.28;
+    g.userData.lidRest = reduceMotion ? -0.28 : 0.8;
+    hinge.rotation.x = g.userData.lidRest;
     const lid = new THREE.Mesh(extrude(roundedRect(2.2, 1.45, 0.12), 0.06, 0.03), mat(C.ink));
     lid.position.set(0, 0.72, 0);
     const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.95, 1.2), mat(C.sky, { roughness: 0.25 }));
@@ -89,20 +93,27 @@ const builders = {
 
   chat() {
     const g = new THREE.Group();
+    const anchor = new THREE.Group();          /* bottom-left corner, where the tail points */
+    anchor.position.set(-0.85, -0.95, 0);
+    const body = new THREE.Group();
+    body.position.set(0.85, 0.95, 0);
+    anchor.add(body);
+    g.add(anchor);
     const s = roundedRect(2.0, 1.35, 0.42);
     const tail = new THREE.Shape();
     tail.moveTo(-0.55, -0.6); tail.lineTo(-0.85, -1.05); tail.lineTo(-0.15, -0.62);
     const bubble = new THREE.Mesh(extrude(s, 0.3), mat(C.sky));
     const tailMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(tail, { depth: 0.3, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 3 }), mat(C.sky));
     tailMesh.position.z = -0.15;
-    g.add(bubble, tailMesh);
+    body.add(bubble, tailMesh);
     const dots = [-0.5, 0, 0.5].map((x) => {
       const d = sphere(0.13, C.ink);
       d.position.set(x, 0.05, 0.22);
-      g.add(d);
+      body.add(d);
       return d;
     });
     g.userData.dots = dots;
+    g.userData.pop = anchor;
     g.position.y = 0.12;
     return g;
   },
@@ -113,10 +124,12 @@ const builders = {
     const bar = box(2.1, 0.26, 0.04, C.sky);
     bar.position.set(0, 0.6, 0.09);
     g.add(panel, bar);
+    const inner = [bar];
     [0xe7998e, 0xe5cb87, 0x9bce9a].forEach((col, i) => {
       const d = sphere(0.055, col);
       d.position.set(-0.9 + i * 0.16, 0.6, 0.13);
       g.add(d);
+      inner.push(d);
     });
     const hero = box(0.95, 0.5, 0.05, C.blue);
     hero.position.set(-0.45, 0.12, 0.09);
@@ -126,7 +139,8 @@ const builders = {
     const l1 = box(1.6, 0.08, 0.04, C.steel); l1.position.set(-0.1, -0.35, 0.09);
     const l2 = box(1.1, 0.08, 0.04, C.steel); l2.position.set(-0.35, -0.52, 0.09);
     g.add(hero, art, l1, l2);
-    g.userData.float = art;
+    inner.push(hero, art, l1, l2);
+    g.userData.pieces = inner.map((m) => ({ m, z: m.position.z }));
     return g;
   },
 
@@ -220,7 +234,7 @@ function createView(icon, kind) {
 
   const view = {
     icon, kind, renderer, scene, camera, pivot, model, canvas,
-    visible: true, hover: 0, spin: 0,
+    visible: true, hover: 0,
     target: { x: 0, y: 0 }, current: { x: 0, y: 0 },
     seed: Math.random() * 10
   };
@@ -235,19 +249,41 @@ function createView(icon, kind) {
   resize();
   new ResizeObserver(resize).observe(icon);
 
-  /* The model turns toward the mouse and does a quick spin when the card is entered. */
+  /* The model turns toward the mouse; some also have their own hover move. */
   const card = icon.closest('.service-card');
+  const u = model.userData;
   if (card && !reduceMotion) {
     card.addEventListener('pointerenter', () => {
       view.hover = 1;
-      if (window.gsap) window.gsap.to(view, { spin: view.spin + Math.PI * 2, duration: 1.2, ease: 'power3.out' });
+      const gsap = window.gsap;
+      if (!gsap) return;
+      if (u.hinge) gsap.to(u.hinge.rotation, { x: u.lidOpen, duration: 0.9, ease: 'power3.out', overwrite: true });
+      if (u.pop) {
+        /* A new-message popup: grows from tiny at the tail corner up to full size. */
+        gsap.fromTo(u.pop.scale, { x: 0.05, y: 0.05, z: 0.05 }, { x: 1, y: 1, z: 1, duration: 0.8, ease: 'back.out(1.9)', overwrite: true });
+        gsap.fromTo(u.pop.rotation, { z: -0.35 }, { z: 0, duration: 0.8, ease: 'back.out(1.6)', overwrite: true });
+      }
+      if (u.pieces) {
+        /* The pieces inside the browser pop out toward you, then settle back. */
+        const pieces = u.pieces;
+        gsap.killTweensOf(pieces.map((p) => p.m.position));
+        gsap.killTweensOf(pieces.map((p) => p.m.scale));
+        const tl = gsap.timeline();
+        tl.to(pieces.map((p) => p.m.position), { z: (i) => pieces[i].z + 1.0, duration: 0.32, stagger: 0.06, ease: 'power2.out' }, 0)
+          .to(pieces.map((p) => p.m.scale), { x: 1.35, y: 1.35, z: 1.35, duration: 0.32, stagger: 0.06, ease: 'power2.out' }, 0)
+          .to(pieces.map((p) => p.m.position), { z: (i) => pieces[i].z, duration: 0.6, stagger: 0.05, ease: 'back.out(2.2)' }, 0.4)
+          .to(pieces.map((p) => p.m.scale), { x: 1, y: 1, z: 1, duration: 0.6, stagger: 0.05, ease: 'back.out(2.2)' }, 0.4);
+      }
     });
     card.addEventListener('pointermove', (e) => {
       const r = card.getBoundingClientRect();
       view.target.y = ((e.clientX - r.left) / r.width - 0.5) * 1.1;
       view.target.x = ((e.clientY - r.top) / r.height - 0.5) * 0.7;
     });
-    card.addEventListener('pointerleave', () => { view.hover = 0; view.target.x = 0; view.target.y = 0; });
+    card.addEventListener('pointerleave', () => {
+      view.hover = 0; view.target.x = 0; view.target.y = 0;
+      if (u.hinge && window.gsap) window.gsap.to(u.hinge.rotation, { x: u.lidRest, duration: 0.8, ease: 'power3.inOut', overwrite: true });
+    });
   }
   views.push(view);
   return view;
@@ -260,7 +296,7 @@ function animate(time) {
     v.current.x += (v.target.x - v.current.x) * 0.08;
     v.current.y += (v.target.y - v.current.y) * 0.08;
     const idle = reduceMotion ? 0 : Math.sin(t * 0.8 + v.seed) * 0.35;
-    v.pivot.rotation.y = idle + v.current.y + v.spin;
+    v.pivot.rotation.y = idle + v.current.y;
     v.pivot.rotation.x = v.current.x;
     v.pivot.position.y = reduceMotion ? 0 : Math.sin(t * 1.4 + v.seed) * 0.08;
     const s = 1 + v.hover * 0.06;
@@ -270,7 +306,6 @@ function animate(time) {
     const u = v.model.userData;
     if (u.dots) u.dots.forEach((d, i) => { d.position.y = 0.05 + (reduceMotion ? 0 : Math.max(0, Math.sin(t * 5 - i * 0.7)) * 0.14); });
     if (u.pulse) u.pulse.material.emissiveIntensity = 0.3 + (reduceMotion ? 0 : (Math.sin(t * 2.4) + 1) * 0.25);
-    if (u.float) u.float.position.z = 0.1 + (reduceMotion ? 0 : (Math.sin(t * 2) + 1) * 0.06);
     if (u.nodes) u.nodes.forEach((n, i) => { n.scale.setScalar(1 + (reduceMotion ? 0 : Math.sin(t * 2.2 + i * 2.1) * 0.08)); });
 
     v.renderer.render(v.scene, v.camera);

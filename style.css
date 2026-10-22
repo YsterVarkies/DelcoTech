@@ -111,3 +111,20 @@ body{overflow-x:clip}
 .service-icon .tool-3d{position:absolute;inset:-14px;width:calc(100% + 28px);height:calc(100% + 28px);display:block;pointer-events:none}
 .service-card:hover .service-icon.has-3d{background:#cfe6f8}
 @media(max-width:390px){.service-icon.has-3d{width:84px;height:84px}}
+
+/* Hero 3D laptop (hero3d.js) replaces the HTML browser mock when WebGL is available */
+.hero-art .hero-3d{position:absolute;left:-110px;right:-80px;top:-90px;bottom:-70px;width:calc(100% + 190px);height:calc(100% + 160px);z-index:2;pointer-events:none}
+.hero-art.is-3d .window-tilt,.hero-art.is-3d .website-window{display:none}
+.hero-art .floating-note{z-index:5}
+/* With the 3D laptop: "Made to stand out" sits in the space left of the screen instead of on top of it */
+.hero-art.is-3d .note-top{top:-20%;right:-7%;left:auto}
+.hero-copy{z-index:3}
+@media(max-width:1149px){.hero-art.is-3d .note-top{top:-9%;right:-3%}}
+
+/* About circle: the DelcoTech logo in 3D (feature3d.js) replaces the "D." lettering */
+.feature-center.is-3d{background:#132731;color:var(--sky);box-shadow:0 0 0 2px rgba(124,200,246,.55),0 30px 70px rgba(100,180,235,.15)}
+.feature-center.is-3d .feature-center-symbol{position:relative;width:150px;height:118px;font-size:0;margin-bottom:6px}
+.feature-center.is-3d .feature-center-symbol span{display:none}
+.feature-center .feature-3d{position:absolute;left:-30px;top:-34px;width:210px;height:180px;display:block;pointer-events:none}
+@media(max-width:930px){.feature-center.is-3d .feature-center-symbol{width:128px;height:100px}.feature-center .feature-3d{left:-26px;top:-30px;width:180px;height:156px}}
+@media(max-width:680px){.feature-center.is-3d .feature-center-symbol{width:118px;height:92px}.feature-center .feature-3d{left:-24px;top:-28px;width:166px;height:144px}}
