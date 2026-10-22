@@ -15,6 +15,7 @@ const C = {
   steel: 0xc9d6e0
 };
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.38, metalness: 0.08, ...extra });
 
@@ -50,10 +51,10 @@ const builders = {
     g.add(base);
     const hinge = new THREE.Group();
     hinge.position.set(0, 0.06, -0.7);
-    /* Rests half closed; opens up when the card is hovered. */
+    /* Rests half closed on mouse devices and opens when hovered; touch screens have no hover, so it stays open. */
     g.userData.hinge = hinge;
     g.userData.lidOpen = -0.28;
-    g.userData.lidRest = reduceMotion ? -0.28 : Math.PI / 2 - 0.02;
+    g.userData.lidRest = reduceMotion || !finePointer ? -0.28 : Math.PI / 2 - 0.02;
     hinge.rotation.x = g.userData.lidRest;
     const lid = new THREE.Mesh(extrude(roundedRect(2.2, 1.45, 0.12), 0.06, 0.03), mat(C.ink));
     lid.position.set(0, 0.72, 0);

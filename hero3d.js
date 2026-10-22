@@ -311,7 +311,7 @@ async function start() {
      laptop further toward the mouse on top of a steep base angle pushes its far
      edge past that bleed, where it gets clipped by the canvas boundary. */
   const OPEN = -0.24, CLOSED = Math.PI / 2 - 0.02, BASE_TURN = -0.12;
-  const state = { lid: CLOSED, fold: 0, turnX: 0, turnY: 0 };
+  const state = { lid: CLOSED, turnX: 0, turnY: 0 };
   const pointer = { x: 0, y: 0 };
   let visible = true;
 
@@ -338,7 +338,7 @@ async function start() {
   new ResizeObserver(resize).observe(canvas);
 
   const render = () => {
-    hinge.rotation.x = Math.min(CLOSED, state.lid + state.fold);
+    hinge.rotation.x = state.lid;
     rig.rotation.y = BASE_TURN + state.turnY;
     rig.rotation.x = state.turnX;
     drawScreen();
@@ -378,14 +378,6 @@ async function start() {
       pointer.y = (e.clientY - r.top) / r.height - 0.5;
     });
     hero.addEventListener('pointerleave', () => { pointer.x = 0; pointer.y = 0; });
-  }
-
-  /* Scroll: the lid folds a little as the hero leaves the screen. */
-  if (window.ScrollTrigger) {
-    window.ScrollTrigger.create({
-      trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6,
-      onUpdate: (self) => { state.fold = self.progress * 1.1; }
-    });
   }
 
   new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }).observe(hero);
