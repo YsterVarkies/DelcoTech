@@ -1,0 +1,26 @@
+{
+  "script.js": {
+    "mtime": 1792607057.661487,
+    "seen": 1792654526.1979895,
+    "ast_hash": "e13b79fea945f20fa35e14aa4b95ca42",
+    "semantic_hash": "e13b79fea945f20fa35e14aa4b95ca42"
+  },
+  "README.txt": {
+    "mtime": 1792514042.6781838,
+    "seen": 1792654526.1979942,
+    "ast_hash": "b2f612bdb6cadaaa56105c4a118acdcc",
+    "semantic_hash": "b2f612bdb6cadaaa56105c4a118acdcc"
+  },
+  "index.html": {
+    "mtime": 1792514042.6789331,
+    "seen": 1792654526.1979966,
+    "ast_hash": "1724272f4f874a670c0adb8cb5b21345",
+    "semantic_hash": "1724272f4f874a670c0adb8cb5b21345"
+  },
+  "assets/favicon.svg": {
+    "mtime": 1792514042.6789331,
+    "seen": 1792654526.1979983,
+    "ast_hash": "e3036cfa6c0b7b91a9487fc5779f905b",
+    "semantic_hash": "e3036cfa6c0b7b91a9487fc5779f905b"
+  }
+}
