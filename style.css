@@ -62,7 +62,8 @@ a{color:inherit}button,input,textarea,select{font:inherit}button{cursor:pointer}
 
 /* ===================== Motion layer (driven by motion.js / GSAP) ===================== */
 /* Entrance animations start some things off to the side: never let that scroll the page sideways. */
-body{overflow-x:clip}
+html,body{overflow-x:clip}
+.process-section,.pricing-section,.services-section,.faq-section{overflow-x:clip}
 /* Hero waits a moment so the intro can play it in. */
 .motion-pending .hero-copy,.motion-pending .hero-art,.motion-pending .nav-wrap{visibility:hidden}
 /* SplitText line masks: a little room so descenders are not clipped. */

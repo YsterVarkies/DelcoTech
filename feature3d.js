@@ -61,8 +61,8 @@ function buildLogo() {
   const slabGeo = new THREE.ExtrudeGeometry(roundedSquare(2.1, 0.5), { depth, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.08, bevelSegments: 6, curveSegments: 24 });
   slabGeo.translate(0, 0, -depth / 2);
   /* A clear, light sky blue: a touch of glow keeps it bright on the dark circle. */
-  const face = new THREE.MeshStandardMaterial({ color: 0x9fdbff, emissive: 0x7cc8f6, emissiveIntensity: 0.45, roughness: 0.3, metalness: 0 });
-  const side = new THREE.MeshStandardMaterial({ color: 0x6cc0f2, emissive: 0x3f9ad6, emissiveIntensity: 0.25, roughness: 0.35, metalness: 0 });
+  const face = new THREE.MeshStandardMaterial({ color: 0x8fd0fa, emissive: 0x6cbcf0, emissiveIntensity: 0.35, roughness: 0.3, metalness: 0 });
+  const side = new THREE.MeshStandardMaterial({ color: 0x5ab4ec, emissive: 0x3590cf, emissiveIntensity: 0.2, roughness: 0.35, metalness: 0 });
   tile.add(new THREE.Mesh(slabGeo, [face, side]));
 
   const dGeo = new THREE.ExtrudeGeometry(letterD(), { depth: 0.14, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.025, bevelSegments: 3, curveSegments: 24 });
