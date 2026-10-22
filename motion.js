@@ -143,13 +143,8 @@
     });
 
     /* The blue line under "what's next." starts short and grows as you scroll down */
-    const wide = window.matchMedia('(min-width: 681px)').matches;
     qa('.underline-green').forEach((line) => {
-      if (wide) {
-        gsap.fromTo(line, { '--underline': 0.08 }, { '--underline': 1, ease: 'none', scrollTrigger: { trigger: line, start: 'top 90%', end: 'top 60%', scrub: 0.5 } });
-      } else {
-        gsap.fromTo(line, { '--underline': 0.08 }, { '--underline': 1, duration: 1.9, ease: 'expo.out', scrollTrigger: { trigger: line, start: 'top 90%', toggleActions: 'play none none none' } });
-      }
+      gsap.fromTo(line, { '--underline': 0.08 }, { '--underline': 1, ease: 'none', scrollTrigger: { trigger: line, start: 'top 90%', end: 'top 60%', scrub: 0.5 } });
     });
 
     /* Value strip */
