@@ -8,7 +8,7 @@
 const CONFIG = {
   name: 'DelcoTech Software & AI Solutions',
   subheadline: 'We create good-looking websites, smarter business systems, custom AI and reliable ongoing support. Built around what you actually need.',
-  whatsapp: '0792183025', // REQUIRED FOR WHATSAPP: actual number, no +, spaces or brackets
+  whatsapp: '27792183025', // REQUIRED FOR WHATSAPP: actual number, no +, spaces or brackets
   email: '',    // REQUIRED FOR EMAIL: actual inbox, e.g. hello@yourdomain.co.za
   about: 'DelcoTech Software & AI Solutions builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
   pricingIntro: 'Every project is different, so we quote each one around your goals and budget. You’ll get a clear written quote before any work begins, with optional monthly care plans to keep things running afterwards.',
