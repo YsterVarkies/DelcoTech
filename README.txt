@@ -29,7 +29,7 @@ CHANGING THE SITE
 Content, pricing, service descriptions, steps and contact details: script.js
 Design, responsive layout, colours and typography: style.css
 Page structure, headings, FAQ and metadata: index.html
-Tab icon: assets/favicon.svg
+Tab icon: assets/favicon.png (made from the DelcoTech logo)
 
 HOW ENQUIRIES WORK
 ------------------
@@ -59,5 +59,5 @@ FILES
 index.html       Homepage and sections
 style.css        Full responsive design
 script.js        Editable site content and interactions
-assets/favicon.svg  Site icon
+assets/favicon.png  Site icon (DelcoTech logo)
 README.txt       This setup guide
