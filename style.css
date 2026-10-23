@@ -113,27 +113,8 @@ html,body{overflow-x:clip}
 .service-card:hover .service-icon.has-3d{background:#cfe6f8}
 @media(max-width:390px){.service-icon.has-3d{width:84px;height:84px}}
 
-/* Hero 3D laptop (hero3d.js) replaces the HTML browser mock when WebGL is available */
-.hero-art .hero-3d{position:absolute;left:-110px;right:-100px;top:-90px;bottom:-70px;width:calc(100% + 210px);height:calc(100% + 160px);z-index:2;pointer-events:none}
-/* Below this width the page's own side gutter is only 24-32px: the full bleed
-   above gets clipped by .hero's overflow:hidden on its right edge as the laptop
-   turns toward the viewer. Shrink the bleed to fit (matches hero3d.js's "roomy"
-   check, so the zoomed-in pose and the bigger bleed only ever appear together). */
-@media(max-width:1399px){.hero-art .hero-3d{left:-50px;right:-18px;top:-45px;bottom:-35px;width:calc(100% + 68px);height:calc(100% + 80px)}}
-.hero-art.is-3d .window-tilt,.hero-art.is-3d .website-window{display:none}
 .hero-art .floating-note{z-index:5}
-/* With the 3D laptop: "Made to stand out" sits in the space left of the screen instead of on top of it */
-.hero-art.is-3d .note-top{top:-20%;right:-7%;left:auto}
 .hero-copy{z-index:3}
-@media(max-width:1149px){.hero-art.is-3d .note-top{top:-9%;right:-3%}}
-/* Phone: hero-art is small and sits right under the footnotes row with almost no
-   gap, so the desktop-tuned bleed and the note's upward pull both need to shrink
-   a lot or they overflow the screen and collide with the row above. */
-@media(max-width:680px){
-  .hero-art .hero-3d{left:-16px;right:-16px;top:8px;bottom:-16px;width:calc(100% + 32px);height:calc(100% + 32px)}
-  .hero-art.is-3d .note-top{top:24px;right:-4%}
-}
-@media(max-width:390px){.hero-art .hero-3d{left:-10px;right:-10px;top:8px;bottom:-10px;width:calc(100% + 20px);height:calc(100% + 20px)}}
 
 /* About circle: the DelcoTech logo in 3D (feature3d.js) replaces the "D." lettering */
 .feature-center.is-3d{background:#132731;color:var(--sky);box-shadow:0 0 0 2px rgba(124,200,246,.55),0 30px 70px rgba(100,180,235,.15)}
