@@ -257,7 +257,7 @@ function createView(icon, kind) {
       const gsap = window.gsap;
       if (!gsap) return;
       if (u.hinge) {
-        gsap.fromTo(u.hinge.rotation, { x: u.lidClosed }, { x: u.lidOpen, duration: 0.9, ease: 'back.out(2)', overwrite: true });
+        gsap.fromTo(u.hinge.rotation, { x: u.lidClosed }, { x: u.lidOpen, duration: 1.6, ease: 'back.out(2)', overwrite: true });
       }
       if (u.pop) {
         /* A new-message popup: grows from tiny at the tail corner up to full size. */
