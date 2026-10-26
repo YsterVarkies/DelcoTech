@@ -122,14 +122,18 @@ function setBrandText(node,text){
 function updateStatus(message,isError=false){const status=$('form-status');status.textContent=message;status.classList.toggle('error',isError);status.hidden=false;}
 
 function setupEnquiry(){
-  const channels=configureContact(),form=$('enquiry');
+  const channels=configureContact(),form=$('enquiry'),sendEmailButton=$('send-email');
+  let sendViaEmail=false;
+  sendEmailButton.hidden=!channels.email;
+  sendEmailButton.addEventListener('click',()=>{sendViaEmail=true;form.requestSubmit();});
   form.addEventListener('submit',event=>{
     event.preventDefault();$('form-status').hidden=true;$('copy-fallback').hidden=true;
+    const viaEmail=sendViaEmail;sendViaEmail=false;
     let valid=true;
     ['name','contact-info','project-details'].forEach(id=>{const input=$(id);const filled=input.value.trim().length>0;input.classList.toggle('invalid',!filled);if(!filled){valid=false;}});
     if(!valid){updateStatus('Please complete your name, contact details and project description.',true);form.querySelector('.invalid').focus();return;}
     const data=new FormData(form),message=prepareMessage(data);
-    if(channels.whatsapp){const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(message);window.location.href=url;updateStatus('Your WhatsApp message is ready. Please press Send in WhatsApp to finish.');}
+    if(channels.whatsapp&&!viaEmail){const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(message);window.location.href=url;updateStatus('Your WhatsApp message is ready. Please press Send in WhatsApp to finish.');}
     else if(channels.email){const subject='New DelcoTech project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
     else{$('copy-message').value=message;$('copy-fallback').hidden=false;updateStatus('Preview only: the site owner has not added real contact details yet. Your message is ready to copy.');}
   });
