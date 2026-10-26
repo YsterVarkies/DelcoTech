@@ -104,7 +104,7 @@ function configureContact(){
   if(channels.whatsapp){whatsappLink.href='https://wa.me/'+CONFIG.whatsapp;whatsappLink.target='_blank';whatsappLink.rel='noopener noreferrer';phoneLink.href='tel:+'+CONFIG.whatsapp;phoneLink.textContent=formatPhone(CONFIG.whatsapp);}
   if(channels.email){emailLink.href='mailto:'+CONFIG.email;emailLink.textContent=CONFIG.email;}
   if(channels.whatsapp){button.firstChild.textContent='Send via WhatsApp ';help.textContent='Submitting opens WhatsApp with your message ready to send.';}
-  else if(channels.email){button.firstChild.textContent='Send via email ';help.textContent='Submitting opens your email app with your enquiry ready to send.';}
+  else if(channels.email){button.firstChild.textContent='Send via Email ';help.textContent='Submitting opens your email app with your enquiry ready to send.';}
   else{button.firstChild.textContent='Prepare my enquiry ';help.textContent='Preview mode: the site owner needs to add a WhatsApp number or email before enquiries can be sent.';}
   return channels;
 }
