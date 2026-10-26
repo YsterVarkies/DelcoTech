@@ -1,7 +1,7 @@
 /*
  * DELITECH SITE CONFIGURATION
- * Edit business details and offerings here. Contact addresses are intentionally
- * left blank because the phone/email in the original site were placeholders.
+ * Edit business details and offerings here. The WhatsApp number and email below
+ * are shown as the contact links on the page.
  * Set whatsapp to real international digits (example: 27821234567) and/or
  * email to a real, verified inbox before publishing the site.
  */
@@ -9,7 +9,7 @@ const CONFIG = {
   name: 'DelcoTech Software & AI Solutions',
   subheadline: 'We create good-looking websites, smarter business systems, custom AI and reliable ongoing support. Built around what you actually need.',
   whatsapp: '27792183025', // REQUIRED FOR WHATSAPP: actual number, no +, spaces or brackets
-  email: '',    // REQUIRED FOR EMAIL: actual inbox, e.g. hello@yourdomain.co.za
+  email: 'info@delcotech.co.za', // REQUIRED FOR EMAIL: actual inbox, e.g. hello@yourdomain.co.za
   about: 'DelcoTech Software & AI Solutions builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
   pricingIntro: 'Every project is different, so we quote each one around your goals and budget. You’ll get a clear written quote before any work begins, with optional monthly care plans to keep things running afterwards.',
   pricingNote: 'Project prices are quoted individually, and monthly plan prices exclude VAT where applicable. AI features have monthly running costs (usage and monitoring), quoted separately before you commit. The final scope, price and timeline are confirmed in writing before work begins.',
@@ -95,11 +95,14 @@ function renderSteps(){CONFIG.steps.forEach((s,i)=>{const row=element('li');cons
 function validEmail(mail){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail) && !/example\.com|yourdomain/i.test(mail);}
 function validWhatsapp(num){return /^\d{10,15}$/.test(num) && !/^(\d)\1+$/.test(num) && !/00000/.test(num);}
 function availableChannels(){return {whatsapp:validWhatsapp(CONFIG.whatsapp.trim()),email:validEmail(CONFIG.email.trim())};}
+function formatPhone(num){return num.startsWith('27')?'+27 '+num.slice(2,4)+' '+num.slice(4,7)+' '+num.slice(7):'+'+num;}
 function configureContact(){
-  const channels=availableChannels(),emailLink=$('email-link'),help=$('form-help'),button=$('submit-enquiry');
+  const channels=availableChannels(),whatsappLink=$('whatsapp-link'),phoneLink=$('phone-link'),emailLink=$('email-link'),help=$('form-help'),button=$('submit-enquiry');
+  whatsappLink.hidden=!channels.whatsapp;
+  phoneLink.hidden=!channels.whatsapp;
+  emailLink.hidden=!channels.email;
+  if(channels.whatsapp){whatsappLink.href='https://wa.me/'+CONFIG.whatsapp;whatsappLink.target='_blank';whatsappLink.rel='noopener noreferrer';phoneLink.href='tel:+'+CONFIG.whatsapp;phoneLink.textContent=formatPhone(CONFIG.whatsapp);}
   if(channels.email){emailLink.href='mailto:'+CONFIG.email;emailLink.textContent=CONFIG.email;}
-  else if(channels.whatsapp){emailLink.textContent='Chat with us on WhatsApp ↗';emailLink.href='https://wa.me/'+CONFIG.whatsapp;emailLink.target='_blank';emailLink.rel='noopener noreferrer';}
-  else{emailLink.removeAttribute('href');emailLink.textContent='Contact details coming soon';}
   if(channels.whatsapp){button.firstChild.textContent='Send via WhatsApp ';help.textContent='Submitting opens WhatsApp with your message ready to send.';}
   else if(channels.email){button.firstChild.textContent='Send via email ';help.textContent='Submitting opens your email app with your enquiry ready to send.';}
   else{button.firstChild.textContent='Prepare my enquiry ';help.textContent='Preview mode: the site owner needs to add a WhatsApp number or email before enquiries can be sent.';}
