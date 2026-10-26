@@ -291,7 +291,7 @@
 
     /* ---------- 9. Magnetic buttons and links ---------- */
     if (finePointer) {
-      qa('.button, .nav-cta, .price-button, .back-top, .service-link, .text-link').forEach((el) => {
+      qa('.button:not(.form-submit), .nav-cta, .price-button, .back-top, .service-link, .text-link').forEach((el) => {
         el.classList.add('magnetic');
         const strength = el.matches('.service-link, .text-link, .back-top') ? 0.25 : 0.35;
         const clamp = gsap.utils.clamp(-14, 14);

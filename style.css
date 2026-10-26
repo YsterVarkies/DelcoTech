@@ -1576,6 +1576,14 @@ a,button {
   margin-top: 1px;
 }
 
+.form-submit:hover {
+  transform: none;
+}
+
+.form-submit + .form-submit {
+  margin-top: 16px;
+}
+
 .form-help {
   font-size: 11px;
   color: #7b8a97;
