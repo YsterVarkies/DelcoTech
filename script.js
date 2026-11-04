@@ -153,11 +153,31 @@ function setupMobileNavigation(){
   document.addEventListener('click',e=>{if(!toggle.contains(e.target)&&!nav.contains(e.target))close();});
   window.addEventListener('resize',()=>{if(window.innerWidth>680)close();});
 }
+function setupShowreel(){
+  const video=$('showreel-video'),play=$('showreel-play');
+  if(!video)return;
+  const frame=video.closest('.showreel-frame');
+  /* Phones held upright get the 9:16 version of the film; everything else keeps the 16:9 one. */
+  if(video.dataset.phoneSrc&&window.matchMedia('(max-width: 680px) and (orientation: portrait)').matches){
+    frame.classList.add('is-vertical');
+    video.setAttribute('width','1080');video.setAttribute('height','1920');
+    video.poster=video.dataset.phonePoster;
+    video.querySelector('source').src=video.dataset.phoneSrc;
+    video.load(); // nothing downloads until play (preload="none")
+  }
+  if(!play)return;
+  /* Our play button sits on the poster; the browser's own controls take over once it plays. */
+  const showPlay=on=>{play.hidden=!on;video.controls=!on;};
+  showPlay(true);
+  play.addEventListener('click',()=>{showPlay(false);const p=video.play();if(p&&p.catch)p.catch(()=>{});});
+  video.addEventListener('play',()=>showPlay(false));
+  video.addEventListener('ended',()=>{video.load();showPlay(true);}); // back to the poster
+}
 /* Scroll reveals, hovers and mouse effects live in motion.js (GSAP). */
 function init(){
   document.querySelectorAll('[data-bind]').forEach(node=>{const value=CONFIG[node.dataset.bind];if(typeof value==='string')setBrandText(node,value);});
   renderServices();renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();
   setBrandText($('footer-text'),'© '+new Date().getFullYear()+' '+CONFIG.name+'. All rights reserved.');
-  setupMobileNavigation();setupEnquiry();
+  setupMobileNavigation();setupEnquiry();setupShowreel();
 }
 init();

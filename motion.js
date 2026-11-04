@@ -150,6 +150,9 @@
     /* Value strip */
     revealOnce('.value-grid > div', { y: 30, opacity: 0, duration: 1, stagger: 0.12, ease: EASE }, '.value-strip', 'top 92%');
 
+    /* Showreel: the player rises into view */
+    revealOnce('.showreel-frame', { y: 70, scale: 0.96, opacity: 0, duration: 1.3, ease: EASE, clearProps: 'transform' }, '.showreel-frame', 'top 88%');
+
     /* ---------- 4. Cards deal in, then tilt under the mouse ---------- */
     const dealIn = (selector, extra = {}) => {
       const cards = qa(selector);

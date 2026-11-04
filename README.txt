@@ -30,6 +30,10 @@ Content, pricing, service descriptions, steps and contact details: script.js
 Design, responsive layout, colours and typography: style.css
 Page structure, headings, FAQ and metadata: index.html
 Tab icon: assets/favicon.png (made from the DelcoTech logo)
+Promo film ("See it in action" section): assets/video/
+  delcotech-ad-web.mp4 + delcotech-ad-poster.jpg                    shown on computers and tablets
+  delcotech-ad-vertical-web.mp4 + delcotech-ad-vertical-poster.jpg  shown on phones held upright (script.js picks it)
+  To update the film, replace these files with new renders and keep the same names.
 
 HOW ENQUIRIES WORK
 ------------------
