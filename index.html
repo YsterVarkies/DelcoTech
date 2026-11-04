@@ -31,6 +31,9 @@
   <script src="motion.js" defer></script>
   <script type="module" src="tools3d.js"></script>
   <script type="module" src="feature3d.js"></script>
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"VideoObject","name":"DelcoTech Software & AI Solutions","description":"Websites, custom software and AI, made around your business. A one-minute film from DelcoTech.","thumbnailUrl":["https://delcotech.co.za/assets/video/delcotech-ad-poster.jpg"],"uploadDate":"2026-11-04T21:30:00+02:00","duration":"PT1M9S","contentUrl":"https://delcotech.co.za/assets/video/delcotech-ad-web.mp4","embedUrl":"https://delcotech.co.za/#showreel"}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -114,6 +117,26 @@
         <div><span class="value-icon" aria-hidden="true">03<span>.</span></span><p><strong>Here after launch</strong><small>Hosting, updates and support.</small></p></div>
       </div>
     </div>
+
+    <section class="section showreel-section dark-section" id="showreel" aria-labelledby="showreel-title">
+      <div class="showreel-glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header">
+          <div><div class="eyebrow eyebrow-light"><span class="dash"></span> SEE IT IN ACTION</div><h2 id="showreel-title">See what we do.<br><span class="text-soft">In about a minute.</span></h2></div>
+          <p class="section-intro">Websites, custom software and AI, made around your business. Press play, sound on.</p>
+        </div>
+        <div class="showreel-frame">
+          <video id="showreel-video" class="showreel-video" controls playsinline preload="none" width="1920" height="1080"
+            poster="assets/video/delcotech-ad-poster.jpg"
+            data-phone-src="assets/video/delcotech-ad-vertical-web.mp4"
+            data-phone-poster="assets/video/delcotech-ad-vertical-poster.jpg">
+            <source src="assets/video/delcotech-ad-web.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="assets/video/delcotech-ad-web.mp4">Download it instead</a>.
+          </video>
+          <button class="showreel-play" id="showreel-play" type="button" hidden><span class="showreel-play-icon" aria-hidden="true"></span>Watch the film <small>1:09</small></button>
+        </div>
+      </div>
+    </section>
 
     <section class="section services-section" id="services" aria-labelledby="services-title">
       <div class="container">
