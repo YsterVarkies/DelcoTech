@@ -6,7 +6,7 @@
  */
 import { SYSTEM_PROMPT } from './knowledge.js';
 
-const MODEL = 'gpt-6.1-terra';
+const MODEL = 'gpt-6-luna';
 const MAX_MESSAGES = 12;        // only the most recent turns are sent to the model
 const MAX_MESSAGE_CHARS = 1000; // per visitor message
 const MAX_OUTPUT_TOKENS = 1000; // includes the model's reasoning tokens
