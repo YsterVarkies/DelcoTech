@@ -3070,6 +3070,6 @@ html,body {
 }
 
 @media (max-width: 480px) {
-  .chat-orb { right: 22px; bottom: 36px; }
+  .chat-orb { right: 12px; bottom: 18px; }
   .chat-panel { left: 0; right: 0; bottom: 0; width: auto; height: 100dvh; border-radius: 0; border: 0; }
 }
