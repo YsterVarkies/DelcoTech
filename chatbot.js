@@ -12,7 +12,6 @@
 (function () {
   const CHAT_ENDPOINT = 'https://delcotech-chat.deliusschoeman-ds.workers.dev';
   const STORAGE_KEY = 'delcotech-chat';
-  const PEEK_KEY = 'delcotech-chat-peek';
   const GREETING = 'Hi! I’m the DelcoTech assistant. Ask me about our websites, software, AI, prices or how a project works.';
   const FALLBACK = 'For anything else, WhatsApp us on +27 79 208 2578 or email info@delcotech.co.za.';
 
@@ -226,19 +225,6 @@
     history.forEach(m => bubble(m.role, m.content));
   }
 
-  // A one-time "Ask us" hint next to the orb, so visitors know what it is.
-  let peekTimer = 0;
-  function hidePeek() { clearTimeout(peekTimer); launcher.classList.remove('peek'); }
-  try {
-    if (!sessionStorage.getItem(PEEK_KEY)) {
-      peekTimer = setTimeout(() => {
-        launcher.classList.add('peek');
-        try { sessionStorage.setItem(PEEK_KEY, '1'); } catch (e) {}
-        peekTimer = setTimeout(hidePeek, 4500);
-      }, 2500);
-    }
-  } catch (e) {}
-
   launcher.addEventListener('pointerenter', () => launcherOrb.excite(true));
   launcher.addEventListener('pointerleave', () => launcherOrb.excite(false));
 
@@ -262,7 +248,6 @@
   function openChat() {
     if (state !== 'closed') return;
     state = 'opening';
-    hidePeek();
     if (!log.childElementCount) render();
     panel.hidden = false;
     headOrb.active = true;
