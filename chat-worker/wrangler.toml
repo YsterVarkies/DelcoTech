@@ -1,0 +1,19 @@
+name = "delcotech-chat"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Sites allowed to use the chat (comma-separated, no trailing slash).
+ALLOWED_ORIGINS = "https://delcotech.co.za,https://www.delcotech.co.za,http://localhost:4173"
+
+# Per-visitor limit: 10 messages per 60 seconds.
+[[ratelimits]]
+name = "CHAT_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+# The OpenAI key is NOT stored here. Add it with:
+#   npx wrangler secret put OPENAI_API_KEY
