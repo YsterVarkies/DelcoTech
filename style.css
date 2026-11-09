@@ -2850,8 +2850,8 @@ html,body {
 /* Launcher: the AI orb from the DelcoTech ad */
 .chat-orb {
   position: fixed;
-  right: 16px;
-  bottom: 16px;
+  right: 36px;
+  bottom: 44px;
   z-index: 151; /* above the chat window, so its pop stays visible while the window bursts out behind it */
   width: 72px;
   height: 72px;
@@ -3069,6 +3069,6 @@ html,body {
 }
 
 @media (max-width: 480px) {
-  .chat-orb { right: 12px; bottom: 12px; }
+  .chat-orb { right: 22px; bottom: 36px; }
   .chat-panel { left: 0; right: 0; bottom: 0; width: auto; height: 100dvh; border-radius: 0; border: 0; }
 }
