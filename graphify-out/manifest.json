@@ -1,26 +1,68 @@
 {
   "script.js": {
-    "mtime": 1792607057.661487,
-    "seen": 1792654526.1979895,
-    "ast_hash": "e13b79fea945f20fa35e14aa4b95ca42",
-    "semantic_hash": "e13b79fea945f20fa35e14aa4b95ca42"
+    "mtime": 1794218511.0802355,
+    "seen": 1794234946.141066,
+    "ast_hash": "2ad36fd2a70de2e5850aa678a9143de3",
+    "semantic_hash": "2ad36fd2a70de2e5850aa678a9143de3"
   },
   "README.txt": {
-    "mtime": 1792514042.6781838,
-    "seen": 1792654526.1979942,
-    "ast_hash": "b2f612bdb6cadaaa56105c4a118acdcc",
-    "semantic_hash": "b2f612bdb6cadaaa56105c4a118acdcc"
+    "mtime": 1794218510.9392352,
+    "seen": 1794234946.1410682,
+    "ast_hash": "f1af9f5ef4c46a6c13a7f83a6ef46973",
+    "semantic_hash": "f1af9f5ef4c46a6c13a7f83a6ef46973"
   },
   "index.html": {
-    "mtime": 1792514042.6789331,
-    "seen": 1792654526.1979966,
-    "ast_hash": "1724272f4f874a670c0adb8cb5b21345",
-    "semantic_hash": "1724272f4f874a670c0adb8cb5b21345"
+    "mtime": 1794234724.0571682,
+    "seen": 1794234946.1410704,
+    "ast_hash": "c3c53a7b454285aa8c9a8c67941d78fb",
+    "semantic_hash": "c3c53a7b454285aa8c9a8c67941d78fb"
   },
-  "assets/favicon.svg": {
-    "mtime": 1792514042.6789331,
-    "seen": 1792654526.1979983,
-    "ast_hash": "e3036cfa6c0b7b91a9487fc5779f905b",
-    "semantic_hash": "e3036cfa6c0b7b91a9487fc5779f905b"
+  "chat-worker/src/knowledge.js": {
+    "mtime": 1794218511.0782354,
+    "seen": 1794234946.141056,
+    "ast_hash": "67c6c4d71d25c135227b6a918a8f7fbd",
+    "semantic_hash": "67c6c4d71d25c135227b6a918a8f7fbd"
+  },
+  "chat-worker/src/worker.js": {
+    "mtime": 1794219013.8763316,
+    "seen": 1794234946.1410599,
+    "ast_hash": "730af76b0374496898a8505d6978df21",
+    "semantic_hash": "730af76b0374496898a8505d6978df21"
+  },
+  "chatbot.js": {
+    "mtime": 1794218912.5136738,
+    "seen": 1794234946.1410615,
+    "ast_hash": "738c05621695b1176a6c2f49f3315988",
+    "semantic_hash": "738c05621695b1176a6c2f49f3315988"
+  },
+  "feature3d.js": {
+    "mtime": 1792690955.8619964,
+    "seen": 1794234946.1410632,
+    "ast_hash": "e8b5862add82544b948c45458668f141",
+    "semantic_hash": "e8b5862add82544b948c45458668f141"
+  },
+  "motion.js": {
+    "mtime": 1794218511.0482352,
+    "seen": 1794234946.1410642,
+    "ast_hash": "efc55249268900e41287b48d85c23699",
+    "semantic_hash": "efc55249268900e41287b48d85c23699"
+  },
+  "tools3d.js": {
+    "mtime": 1792740044.8007424,
+    "seen": 1794234946.1410673,
+    "ast_hash": "f6d06d54002695701fd41711e073c8bb",
+    "semantic_hash": "f6d06d54002695701fd41711e073c8bb"
+  },
+  "chat-worker/README.md": {
+    "mtime": 1794218511.0772357,
+    "seen": 1794234946.1410694,
+    "ast_hash": "7780b85dac2c7cb90889e30d48f242fe",
+    "semantic_hash": "7780b85dac2c7cb90889e30d48f242fe"
+  },
+  "robots.txt": {
+    "mtime": 1793192767.3665047,
+    "seen": 1794234946.141071,
+    "ast_hash": "def34ddfe87ff6ff1c1277d7ba299343",
+    "semantic_hash": "def34ddfe87ff6ff1c1277d7ba299343"
   }
 }

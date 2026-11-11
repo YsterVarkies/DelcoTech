@@ -1,113 +1,122 @@
-# Graph Report - DelcoTech  (2026-10-22)
+# Graph Report - DelcoTech  (2026-11-09)
 
 ## Corpus Check
-- Corpus is ~2,815 words - fits in a single context window. You may not need a graph.
+- Corpus is ~18,291 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 65 nodes · 110 edges · 8 communities
-- Extraction: 80% EXTRACTED · 19% INFERRED · 1% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.9)
-- Token cost: 165,449 input · 9,000 output
+- 107 nodes · 189 edges · 9 communities
+- Extraction: 85% EXTRACTED · 14% INFERRED · 1% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.86)
+- Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
-- Services & Pricing Content
-- Enquiry Channels & Deployment
-- Page Structure & Branding
-- Page Rendering Functions
-- Config & Contact Validation
-- Favicon & Brand Mark
-- Accessibility & Metadata
-- Enquiry Submission Flow
+- Page Sections & Contact
+- Site Script & Config
+- 3D Service Tools
+- Chat Widget & Orb
+- 3D Logo Feature
+- Chat Backend Docs
+- Setup & Enquiry Docs
+- Chat Worker Code
+- Showreel & Styling
 
 ## God Nodes (most connected - your core abstractions)
-1. `Enquiry Form (#enquiry)` - 12 edges
-2. `Static Enquiry Flow` - 9 edges
-3. `init()` - 8 edges
-4. `Site Header & Main Navigation` - 8 edges
-5. `Pricing Section (#build-list, #ai-list, #plan-list)` - 8 edges
-6. `DelcoTech Website Setup Guide` - 7 edges
-7. `Contact Section (#email-link)` - 6 edges
-8. `setupEnquiry()` - 5 edges
-9. `Pre-launch Checklist` - 5 edges
-10. `Accessibility Features (skip link, labelled fields, keyboard menu, focus states, reduced motion)` - 5 edges
+1. `Homepage (index.html)` - 26 edges
+2. `init()` - 8 edges
+3. `DelcoTech Website README` - 8 edges
+4. `Contact Section` - 7 edges
+5. `DelcoTech Chat Backend (Cloudflare Worker)` - 6 edges
+6. `Header and Main Navigation` - 6 edges
+7. `Services Section` - 6 edges
+8. `Service offerings (websites, API integration, custom software, AI chatbots, hosting)` - 6 edges
+9. `render()` - 5 edges
+10. `setupEnquiry()` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Enquiry Form (#enquiry)` --references--> `WhatsApp Enquiry Channel`  [INFERRED]
-  index.html → README.txt
-- `Enquiry Form (#enquiry)` --references--> `Email App Enquiry Channel`  [INFERRED]
-  index.html → README.txt
-- `POPIA Privacy Notice for Enquiries` --conceptually_related_to--> `Enquiry Form (#enquiry)`  [INFERRED]
+- `Allowed origins (delcotech.co.za)` --conceptually_related_to--> `sitemap.xml (delcotech.co.za)`  [AMBIGUOUS]
+  chat-worker/README.md → robots.txt
+- `Bot knowledge base (src/knowledge.js)` --conceptually_related_to--> `Service offerings (websites, API integration, custom software, AI chatbots, hosting)`  [INFERRED]
+  chat-worker/README.md → index.html
+- `Bot knowledge base (src/knowledge.js)` --conceptually_related_to--> `CONFIG object in script.js`  [INFERRED]
+  chat-worker/README.md → README.txt
+- `Accessibility and Maintenance` --conceptually_related_to--> `Homepage (index.html)`  [INFERRED]
   README.txt → index.html
-- `Enquiry Form (#enquiry)` --implements--> `Static Enquiry Flow`  [INFERRED]
-  index.html → README.txt
-- `Accessibility Features (skip link, labelled fields, keyboard menu, focus states, reduced motion)` --references--> `FAQ Section (native details disclosures)`  [INFERRED]
-  README.txt → index.html
+- `robots.txt crawl policy` --conceptually_related_to--> `Homepage (index.html)`  [INFERRED]
+  robots.txt → index.html
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **Enquiry Channel Fallback Chain (WhatsApp, email, copy-only)** — readme_whatsapp_enquiry_channel, readme_email_enquiry_channel, readme_copy_only_fallback, index_enquiry_form [INFERRED 0.95]
-- **Script-populated Content Sections** — index_services_section, index_pricing_section, index_process_section, index_about_section, index_noscript_note [INFERRED 0.95]
-- **DelcoTech Service Offerings** — index_business_websites, index_api_integration, index_custom_software, index_hosting_care_plans, index_ai_chatbots_custom_ai [EXTRACTED 1.00]
+- **Chat flow: chatbot.js to Cloudflare Worker to OpenAI** — chatbot, chat_worker_readme_overview, chat_worker_readme_openai_api [EXTRACTED 0.95]
+- **GSAP animation stack (vendor libs, motion.js, hero guard)** — index_gsap_vendor, motion, index_motion_pending_script [INFERRED 0.85]
+- **Enquiry flow: form, script.js CONFIG and contact channels** — index_contact_form, script, readme_enquiry_flow, readme_config_object [INFERRED 0.85]
 
-## Communities (8 total, 0 thin omitted)
+## Communities (9 total, 0 thin omitted)
 
-### Community 0 - "Services & Pricing Content"
-Cohesion: 0.26
-Nodes (13): AI Chatbots & Custom AI (service), API Integration (service), Business Websites (service), Custom Software (service), Enquiry Form (#enquiry), FAQ Section (native details disclosures), Hosting & Monthly Care Plans (service), Noscript Notice (JS required for cards and enquiries) (+5 more)
+### Community 0 - "Page Sections & Contact"
+Cohesion: 0.18
+Nodes (20): About / Feature Section, Contact Section, Contact channels (WhatsApp, phone, email links), DelcoTech Software & AI Solutions brand, FAQ Section, Site Footer, Google Fonts (DM Sans, DM Serif Display, Plus Jakarta Sans), GSAP vendor scripts (gsap, ScrollTrigger, SplitText) (+12 more)
 
-### Community 1 - "Enquiry Channels & Deployment"
-Cohesion: 0.19
-Nodes (10): Copy Fallback Panel (#copy-fallback), Google Fonts Stylesheet (DM Sans, DM Serif Display, Plus Jakarta Sans), Preview / Copy-only Fallback, DelcoTech Website Setup Guide, Email App Enquiry Channel, Google Fonts with Offline System Font Fallback, POPIA Privacy Notice for Enquiries, Pre-launch Checklist (+2 more)
+### Community 1 - "Site Script & Config"
+Cohesion: 0.18
+Nodes (18): availableChannels(), CONFIG, configureContact(), element(), formatPhone(), icons, init(), prepareMessage() (+10 more)
 
-### Community 2 - "Page Structure & Branding"
-Cohesion: 0.25
-Nodes (9): About / Feature Section, Contact Section (#email-link), Hero Section, Process Section (#steps-list), Site Footer (#footer-text), Site Header & Main Navigation, CONFIG Object (WhatsApp number and email in script.js), DelcoTech Software & AI Solutions (brand / trading name) (+1 more)
+### Community 2 - "3D Service Tools"
+Cohesion: 0.22
+Nodes (10): animate(), box(), builders, C, createView(), mat(), sphere(), start() (+2 more)
 
-### Community 3 - "Page Rendering Functions"
-Cohesion: 0.28
-Nodes (8): element(), init(), renderPrices(), renderServices(), renderSteps(), setBrandText(), setupMobileNavigation(), setupReveal()
+### Community 3 - "Chat Widget & Orb"
+Cohesion: 0.29
+Nodes (9): bubble(), closeChat(), createOrb(), focusInside(), frame(), openChat(), render(), revealCircle() (+1 more)
 
-### Community 4 - "Config & Contact Validation"
-Cohesion: 0.36
-Nodes (6): availableChannels(), CONFIG, configureContact(), icons, validEmail(), validWhatsapp()
+### Community 4 - "3D Logo Feature"
+Cohesion: 0.33
+Nodes (7): buildLogo(), center, letterD(), roundedSquare(), section, start(), webglAvailable()
 
-### Community 5 - "Favicon & Brand Mark"
-Cohesion: 0.67
-Nodes (4): DelcoTech Brand Palette (navy #101f29, sky blue #7cc8f6, white), C2PA Content Credentials Manifest (Claude-provided provenance), D Monogram Logo Mark (stroked D with dot accent), DelcoTech Favicon (SVG)
+### Community 5 - "Chat Backend Docs"
+Cohesion: 0.22
+Nodes (9): Allowed origins (delcotech.co.za), CHAT_ENDPOINT in chatbot.js, Bot knowledge base (src/knowledge.js), OpenAI Responses API (gpt-6.1-terra), DelcoTech Chat Backend (Cloudflare Worker), Rate limit (10 messages/minute), Worker Setup (wrangler login, secret, deploy), CONFIG object in script.js (+1 more)
 
-### Community 6 - "Accessibility & Metadata"
-Cohesion: 0.50
-Nodes (4): Mobile Menu Toggle (#menu-toggle), SEO & Open Graph Metadata, Skip to Content Link, Accessibility Features (skip link, labelled fields, keyboard menu, focus states, reduced motion)
+### Community 6 - "Setup & Enquiry Docs"
+Cohesion: 0.22
+Nodes (9): Enquiry Form (#enquiry), 3D Tools (Three.js), 3D DelcoTech logo in About circle, Accessibility and Maintenance, How Enquiries Work (WhatsApp / email / copy fallback), Project Files Inventory, Quick Start (static hosting), Six service card 3D models (+1 more)
 
-### Community 7 - "Enquiry Submission Flow"
-Cohesion: 0.67
-Nodes (3): prepareMessage(), setupEnquiry(), updateStatus()
+### Community 7 - "Chat Worker Code"
+Cohesion: 0.38
+Nodes (5): Worker Settings (origins, rate limit, model, logs), wrangler.toml, SYSTEM_PROMPT, extractText(), fetch()
+
+### Community 8 - "Showreel & Styling"
+Cohesion: 0.33
+Nodes (6): Showreel Section (See it in action), Showreel video and poster assets, style.css, VideoObject JSON-LD metadata, Changing the Site (file responsibilities), Promo film assets (See it in action)
 
 ## Ambiguous Edges - Review These
-- `DelcoTech Software & AI Solutions (brand / trading name)` → `DELITECH heading name (possible brand inconsistency)`  [AMBIGUOUS]
-  README.txt · relation: conceptually_related_to
+- `chatbot.js` → `Project Files Inventory`  [AMBIGUOUS]
+  README.txt · relation: references
+- `Allowed origins (delcotech.co.za)` → `sitemap.xml (delcotech.co.za)`  [AMBIGUOUS]
+  chat-worker/README.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **8 isolated node(s):** `DELITECH heading name (possible brand inconsistency)`, `Server-side Form Provider / Backend (recommended upgrade)`, `SEO & Open Graph Metadata`, `Google Fonts Stylesheet (DM Sans, DM Serif Display, Plus Jakarta Sans)`, `Skip to Content Link` (+3 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 12 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **9 isolated node(s):** `Quick Start (static hosting)`, `OpenAI Responses API (gpt-6.1-terra)`, `Rate limit (10 messages/minute)`, `wrangler.toml`, `Value Strip (commitments)` (+4 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 22 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Enquiry Form (#enquiry)` connect `Services & Pricing Content` to `Enquiry Channels & Deployment`, `Page Structure & Branding`?**
-  _High betweenness centrality (0.112) - this node is a cross-community bridge._
-- **Are the 4 inferred relationships involving `Enquiry Form (#enquiry)` (e.g. with `Email App Enquiry Channel` and `Static Enquiry Flow`) actually correct?**
-  _`Enquiry Form (#enquiry)` has 4 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `DELITECH heading name (possible brand inconsistency)`, `Server-side Form Provider / Backend (recommended upgrade)`, `SEO & Open Graph Metadata` to the rest of the system?**
-  _8 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Why does `DelcoTech Website Setup Guide` connect `Enquiry Channels & Deployment` to `Page Structure & Branding`, `Accessibility & Metadata`?**
-  _High betweenness centrality (0.094) - this node is a cross-community bridge._
-- **Why does `Static Enquiry Flow` connect `Enquiry Channels & Deployment` to `Services & Pricing Content`, `Page Structure & Branding`?**
-  _High betweenness centrality (0.082) - this node is a cross-community bridge._
+- **Why does `Homepage (index.html)` connect `Page Sections & Contact` to `Site Script & Config`, `3D Service Tools`, `Chat Widget & Orb`, `3D Logo Feature`, `Setup & Enquiry Docs`, `Showreel & Styling`?**
+  _High betweenness centrality (0.537) - this node is a cross-community bridge._
+- **Are the 3 inferred relationships involving `Homepage (index.html)` (e.g. with `Accessibility and Maintenance` and `robots.txt crawl policy`) actually correct?**
+  _`Homepage (index.html)` has 3 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `Quick Start (static hosting)`, `OpenAI Responses API (gpt-6.1-terra)`, `Rate limit (10 messages/minute)` to the rest of the system?**
+  _9 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `DelcoTech Chat Backend (Cloudflare Worker)` connect `Chat Backend Docs` to `Chat Worker Code`?**
+  _High betweenness centrality (0.169) - this node is a cross-community bridge._
+- **Why does `Bot knowledge base (src/knowledge.js)` connect `Chat Backend Docs` to `Page Sections & Contact`, `Site Script & Config`?**
+  _High betweenness centrality (0.138) - this node is a cross-community bridge._
 
 ### Low-confidence Hints
 _AMBIGUOUS edges — the extractor was unsure. Verify before acting on these._
 
-- **What is the exact relationship between `DelcoTech Software & AI Solutions (brand / trading name)` and `DELITECH heading name (possible brand inconsistency)`?**
+- **What is the exact relationship between `chatbot.js` and `Project Files Inventory`?**
+  _Edge tagged AMBIGUOUS (relation: references) - confidence is low._
+- **What is the exact relationship between `Allowed origins (delcotech.co.za)` and `sitemap.xml (delcotech.co.za)`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
