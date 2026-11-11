@@ -13,14 +13,6 @@ const CONFIG = {
   about: 'DelcoTech Software & AI Solutions builds practical, thoughtful websites, software and custom AI for people who don’t have an IT department. You get a clear quote, an agreed plan and one person to talk to from the first chat to launch and beyond.',
   pricingIntro: 'Every project is different, so we quote each one around your goals and budget. You’ll get a clear written quote before any work begins, with optional monthly care plans to keep things running afterwards.',
   pricingNote: 'Project prices are quoted individually, and monthly plan prices exclude VAT where applicable. AI features have monthly running costs (usage and monitoring), quoted separately before you commit. The final scope, price and timeline are confirmed in writing before work begins.',
-  services: [
-    {title:'Custom software',text:'Practical dashboards and tools that cut down repetitive admin and fit your workflow.',kind:'software',type:'Custom software'},
-    {title:'Custom AI',text:'AI built around your business: tools that read documents, spot patterns or take repetitive work off your hands.',kind:'ai',type:'AI chatbot or custom AI'},
-    {title:'AI chatbots',text:'A smart assistant on your website that answers customer questions around the clock, using your own information.',kind:'chat',type:'AI chatbot or custom AI'},
-    {title:'Business websites',text:'Beautiful, easy-to-use websites that help customers find you, trust you and get in touch.',kind:'website',type:'Business website'},
-    {title:'API integration',text:'Connect your website or software to the other tools you use, or build a custom API so your systems can talk to each other.',kind:'api',type:'API integration'},
-    {title:'Hosting & care',text:'Keep your website online, updated and in good hands with ongoing maintenance.',kind:'shield',type:'Hosting and maintenance'}
-  ],
   // Project prices are not shown publicly: each group is a single "custom quote" card.
   builds: [
     {quote:true,title:'Get a custom quote',text:'Websites, business systems and custom software are all quoted around what you need. Tell us your goals and budget and we’ll recommend the right fit.',items:['Designed and built around your business','Features, pages and integrations to suit you','A clear written quote before any work begins'],type:'Business website',message:'I’d like a custom quote for a website or business system.'}
@@ -43,16 +35,6 @@ const CONFIG = {
 
 const $ = id => document.getElementById(id);
 const element = (tag,className,text) => {const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
-const icons = {
-  website:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01M7 14h6M7 17h10"/>',
-  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18m-13 5 2 2 5-5"/>',
-  software:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m9 9-3 3 3 3m6-6 3 3-3 3m-4 2 2-10"/>',
-  shield:'<path d="M12 22c5-2 8-5 8-10V5l-8-3-8 3v7c0 5 3 8 8 10Z"/><path d="m9 12 2 2 4-4"/>',
-  api:'<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.5 12h4l5.5-4.5M11.5 12 17 16.5"/>',
-  chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/>',
-  ai:'<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4M10 12h4"/>'
-};
-
 function jumpToContact(type,packageName){
   const select=$('project-type');
   if(type)select.value=type;
@@ -61,16 +43,6 @@ function jumpToContact(type,packageName){
   $('contact').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 }
 
-function renderServices(){
-  CONFIG.services.forEach(s=>{
-    const card=element('article','service-card');
-    const icon=element('div','service-icon');icon.setAttribute('aria-hidden','true');icon.dataset.kind=s.kind;icon.innerHTML='<svg viewBox="0 0 24 24">'+(icons[s.kind]||icons.website)+'</svg>';
-    const title=element('h3','',s.title);const summary=element('p','',s.text);
-    const link=element('a','service-link');link.href='#contact';link.textContent='Let’s talk';link.append(element('span','','↗'));
-    link.addEventListener('click',()=>{$('project-type').value=s.type;});
-    card.append(icon,title,summary,link);$('services-list').append(card);
-  });
-}
 function renderPrices(source,targetId){
   const isPlan=source===CONFIG.plans;
   source.forEach(item=>{
@@ -153,18 +125,32 @@ function setupMobileNavigation(){
   document.addEventListener('click',e=>{if(!toggle.contains(e.target)&&!nav.contains(e.target))close();});
   window.addEventListener('resize',()=>{if(window.innerWidth>680)close();});
 }
+/* Phones held upright get the 9:16 version of a video; everything else keeps the 16:9 one.
+   Re-checked whenever the screen changes shape (rotating a phone, resizing a window). */
+const phoneQuery=window.matchMedia('(max-width: 680px) and (orientation: portrait)');
+function useVerticalOnPhones(video,frame){
+  const source=video.querySelector('source');
+  if(!source||!video.dataset.phoneSrc)return;
+  const wide={src:source.getAttribute('src'),poster:video.getAttribute('poster'),width:video.getAttribute('width'),height:video.getAttribute('height')};
+  const apply=()=>{
+    const tall=phoneQuery.matches,src=tall?video.dataset.phoneSrc:wide.src;
+    frame.classList.toggle('is-vertical',tall);
+    video.setAttribute('width',tall?wide.height:wide.width);video.setAttribute('height',tall?wide.width:wide.height);
+    video.poster=tall?video.dataset.phonePoster:wide.poster;
+    if(source.getAttribute('src')===src)return;
+    const wasPlaying=!video.paused;
+    source.setAttribute('src',src);
+    video.load(); // nothing downloads until it plays (preload="none")
+    if(wasPlaying){const p=video.play();if(p&&p.catch)p.catch(()=>{});}
+  };
+  apply();
+  if(phoneQuery.addEventListener)phoneQuery.addEventListener('change',apply);else phoneQuery.addListener(apply);
+}
 function setupShowreel(){
   const video=$('showreel-video'),play=$('showreel-play');
   if(!video)return;
   const frame=video.closest('.showreel-frame');
-  /* Phones held upright get the 9:16 version of the film; everything else keeps the 16:9 one. */
-  if(video.dataset.phoneSrc&&window.matchMedia('(max-width: 680px) and (orientation: portrait)').matches){
-    frame.classList.add('is-vertical');
-    video.setAttribute('width','1080');video.setAttribute('height','1920');
-    video.poster=video.dataset.phonePoster;
-    video.querySelector('source').src=video.dataset.phoneSrc;
-    video.load(); // nothing downloads until play (preload="none")
-  }
+  useVerticalOnPhones(video,frame);
   if(!play)return;
   /* Our play button sits on the poster; the browser's own controls take over once it plays. */
   const showPlay=on=>{play.hidden=!on;video.controls=!on;};
@@ -173,11 +159,39 @@ function setupShowreel(){
   video.addEventListener('play',()=>showPlay(false));
   video.addEventListener('ended',()=>{video.load();showPlay(true);}); // back to the poster
 }
+/* "What we do": each service plays a silent, looping clip from the film while it is on screen. */
+function setupShowcase(){
+  const videos=[...document.querySelectorAll('.showcase-video')];
+  if(!videos.length)return;
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tryPlay=video=>{const p=video.play();if(p&&p.catch)p.catch(()=>{});};
+  videos.forEach(video=>{
+    const frame=video.closest('.showcase-frame'),toggle=frame.querySelector('.showcase-toggle');
+    useVerticalOnPhones(video,frame);
+    /* Reduced motion: stay on the poster until the visitor presses play. */
+    video.dataset.paused=reduceMotion?'1':'';
+    const sync=()=>{const playing=!video.paused;frame.classList.toggle('is-playing',playing);toggle.setAttribute('aria-label',playing?'Pause video':'Play video');};
+    video.addEventListener('play',sync);video.addEventListener('pause',sync);
+    toggle.hidden=false;sync();
+    toggle.addEventListener('click',()=>{
+      if(video.paused){video.dataset.paused='';tryPlay(video);}
+      else{video.dataset.paused='1';video.pause();}
+    });
+  });
+  document.querySelectorAll('.showcase [data-project]').forEach(link=>link.addEventListener('click',()=>{$('project-type').value=link.dataset.project;}));
+  if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
+    const video=entry.target;
+    if(entry.isIntersecting){if(!video.dataset.paused)tryPlay(video);}
+    else if(!video.paused)video.pause();
+  }),{threshold:0.35});
+  videos.forEach(video=>io.observe(video));
+}
 /* Scroll reveals, hovers and mouse effects live in motion.js (GSAP). */
 function init(){
   document.querySelectorAll('[data-bind]').forEach(node=>{const value=CONFIG[node.dataset.bind];if(typeof value==='string')setBrandText(node,value);});
-  renderServices();renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();
+  renderPrices(CONFIG.builds,'build-list');renderPrices(CONFIG.aiBuilds,'ai-list');renderPrices(CONFIG.plans,'plan-list');renderSteps();
   setBrandText($('footer-text'),'© '+new Date().getFullYear()+' '+CONFIG.name+'. All rights reserved.');
-  setupMobileNavigation();setupEnquiry();setupShowreel();
+  setupMobileNavigation();setupEnquiry();setupShowreel();setupShowcase();
 }
 init();

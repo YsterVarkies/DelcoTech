@@ -1005,82 +1005,162 @@ a,button {
   background: #fff;
 }
 
-.service-grid {
+/* ---------- What we do: a looping clip from the film for each service (9:16 on phones) ---------- */
+.showcase-list {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 14px;
+  gap: clamp(56px,7vw,96px);
 }
 
-.service-card {
-  min-height: 296px;
-  padding: 29px 25px;
+/* title with its description underneath; "Let's talk" sits on the right */
+.showcase-head {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: end;
+  gap: 12px 44px;
+  margin-bottom: 22px;
+}
+
+.showcase-head h3 {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0;
+  font: 800 clamp(26px,3vw,38px)/1.1 var(--head);
+  letter-spacing: -.045em;
+}
+
+.showcase-num {
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: var(--sky-deep);
+}
+
+.showcase-head p {
+  grid-column: 1;
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.showcase-head .text-link {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  white-space: nowrap;
+}
+
+.showcase-frame {
+  position: relative;
+  padding: 8px;
+  border-radius: 26px;
   background: var(--cream);
   border: 1px solid #e6eef5;
-  border-radius: 15px;
-  transition: background .22s,transform .22s,box-shadow .22s;
+  box-shadow: 0 30px 80px rgba(16,40,60,.1);
 }
 
-.service-card:hover {
-  background: #e4f1fb;
-  transform: translateY(-5px);
-  box-shadow: 0 17px 40px rgba(33,61,90,.07);
+.showcase-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 19px;
+  background: #dbeaf6;
+  object-fit: cover;
 }
 
-.service-icon {
-  height: 55px;
-  width: 55px;
+/* phone version: a tall clip that still fits on screen under the sticky header */
+.showcase-frame.is-vertical {
+  width: min(100%,calc(78vh * 9 / 16 + 18px));
+  width: min(100%,calc(78svh * 9 / 16 + 18px));
+  margin: 0 auto;
+}
+
+.showcase-frame.is-vertical .showcase-video {
+  aspect-ratio: 9 / 16;
+}
+
+/* small pause / play button in the corner of each clip (left, clear of the chat orb) */
+.showcase-toggle {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
-  background: #dcecf8;
-  border-radius: 14px;
-  color: #2f6f9f;
-  margin-bottom: 30px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 50%;
+  background: rgba(12,27,36,.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  opacity: .7;
+  transition: opacity .2s,background .2s;
 }
 
-.service-icon svg {
-  width: 26px;
-  height: 26px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.showcase-toggle:hover,.showcase-toggle:focus-visible {
+  opacity: 1;
+  background: rgba(12,27,36,.75);
 }
 
-.service-card h3 {
-  font-size: 18px;
-  line-height: 1.35;
-  letter-spacing: -.045em;
-  margin-bottom: 10px;
+.showcase-toggle:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
 }
 
-.service-card p {
-  font-size: 13px;
-  line-height: 1.7;
-  color: #62727f;
-  margin: 0 0 24px;
+/* play triangle while paused */
+.showcase-toggle span {
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-style: solid;
+  border-width: 7px 0 7px 11px;
+  border-color: transparent transparent transparent currentColor;
 }
 
-.service-card .service-link {
-  margin-top: auto;
-  text-decoration: none;
-  color: #1f4663;
-  font: 800 12px var(--head);
-  display: inline-flex;
-  gap: 13px;
-  align-items: center;
+/* pause bars while playing */
+.showcase-frame.is-playing .showcase-toggle span {
+  width: 11px;
+  height: 13px;
+  margin: 0;
+  border: 0;
+  border-left: 3.5px solid currentColor;
+  border-right: 3.5px solid currentColor;
 }
 
-.service-card .service-link span {
-  font-size: 18px;
-  transition: transform .2s;
-}
+@media(max-width:680px) {
+  .showcase-head {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
 
-.service-card .service-link:hover span {
-  transform: translate(3px,-3px);
+  .showcase-head p {
+    font-size: 14px;
+  }
+
+  .showcase-head .text-link {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+  }
+
+  .showcase-frame {
+    padding: 5px;
+    border-radius: 21px;
+  }
+
+  .showcase-video {
+    border-radius: 16px;
+  }
+
+  .showcase-toggle {
+    left: 16px;
+    bottom: 16px;
+  }
 }
 
 .feature-section {
@@ -1871,10 +1951,6 @@ a,button {
   .contact-grid {
     gap: 55px;
   }
-
-  .service-card {
-    padding: 25px 19px;
-  }
 }
 
 @media(max-width:930px) {
@@ -1948,18 +2024,6 @@ a,button {
 
   .value-icon {
     font-size: 24px;
-  }
-
-  .service-grid {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .service-card {
-    min-height: 245px;
-  }
-
-  .service-icon {
-    margin-bottom: 24px;
   }
 
   .section {
@@ -2220,30 +2284,6 @@ a,button {
     font-size: 14px;
   }
 
-  .service-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .service-card {
-    padding: 23px 19px;
-    min-height: 270px;
-  }
-
-  .service-card h3 {
-    font-size: 16px;
-  }
-
-  .service-card p {
-    font-size: 12px;
-  }
-
-  .service-icon {
-    width: 46px;
-    height: 46px;
-    margin-bottom: 19px;
-  }
-
   .feature-grid {
     grid-template-columns: 1fr;
     gap: 8px;
@@ -2450,18 +2490,6 @@ a,button {
     bottom: -4px;
   }
 
-  .service-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .service-card {
-    min-height: 215px;
-  }
-
-  .service-icon {
-    margin-bottom: 13px;
-  }
-
   .contact-card {
     padding: 25px 18px;
   }
@@ -2622,18 +2650,17 @@ html,body {
 }
 
 /* Cards: 3D tilt plus a light that follows the pointer */
-
-.service-card,.pricing-card {
+.pricing-card {
   position: relative;
   transition-property: background,box-shadow,border-color!important;
   will-change: transform;
 }
 
-.service-card:hover,.pricing-card:hover {
+.pricing-card:hover {
   transform: none;
 }
 
-.service-card::after,.pricing-card::after {
+.pricing-card::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -2644,32 +2671,19 @@ html,body {
   background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(124,200,246,.22),rgba(124,200,246,0) 65%);
 }
 
-.service-card:hover::after {
-  opacity: 1;
-}
-
 @media(hover:hover) and (pointer:fine) {
   .pricing-card:hover::after {
     opacity: 1;
   }
 }
 
-.service-card>*,.pricing-card>*:not(.popular) {
+.pricing-card>*:not(.popular) {
   position: relative;
   z-index: 1;
 }
 
 .pricing-card .popular {
   z-index: 2;
-}
-
-.service-icon {
-  transition: background .3s,color .3s;
-}
-
-.service-card:hover .service-icon {
-  background: var(--sky);
-  color: var(--ink);
 }
 
 /* Process: a line that fills as you scroll through the steps */
@@ -2734,41 +2748,6 @@ html,body {
 .underline-green::after {
   transform: scaleX(var(--underline,1));
   transform-origin: 0 50%;
-}
-
-/* 3D tool models (tools3d.js) replace the service icons when WebGL is available */
-
-.service-icon.has-3d {
-  width: 96px;
-  height: 96px;
-  border-radius: 20px;
-  margin-bottom: 22px;
-  overflow: visible;
-  position: relative;
-}
-
-.service-icon.has-3d svg {
-  display: none;
-}
-
-.service-icon .tool-3d {
-  position: absolute;
-  inset: -14px;
-  width: calc(100% + 28px);
-  height: calc(100% + 28px);
-  display: block;
-  pointer-events: none;
-}
-
-.service-card:hover .service-icon.has-3d {
-  background: #cfe6f8;
-}
-
-@media(max-width:390px) {
-  .service-icon.has-3d {
-    width: 84px;
-    height: 84px;
-  }
 }
 
 .hero-art .floating-note {

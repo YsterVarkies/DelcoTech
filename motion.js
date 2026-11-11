@@ -168,7 +168,12 @@
         }
       });
     };
-    dealIn('.service-card');
+    /* "What we do": each service's clip rises into view, its title and copy just behind */
+    qa('.showcase').forEach((item) => {
+      const tl = gsap.timeline({ scrollTrigger: { trigger: item, start: 'top 86%', toggleActions: 'play none none none' }, defaults: { ease: EASE } });
+      tl.from(qa('.showcase-head > *', item), { y: 26, opacity: 0, duration: 0.9, stagger: 0.08 }, 0)
+        .from(q('.showcase-frame', item), { y: 60, scale: 0.97, opacity: 0, duration: 1.2, clearProps: 'transform' }, 0.1);
+    });
     dealIn('.pricing-card');
 
     const tiltCard = (card, strength) => {
@@ -188,12 +193,6 @@
       card.addEventListener('pointerleave', () => { rx(0); ry(0); lift(0); });
     };
     if (finePointer) {
-      qa('.service-card').forEach((card) => {
-        tiltCard(card, 12);
-        const icon = q('.service-icon', card);
-        card.addEventListener('pointerenter', () => gsap.to(icon, { scale: 1.1, duration: 0.5, ease: 'back.out(2)' }));
-        card.addEventListener('pointerleave', () => gsap.to(icon, { scale: 1, duration: 0.5, ease: 'power3.out' }));
-      });
       qa('.pricing-card:not(.quote-card)').forEach((card) => tiltCard(card, 7));
       qa('.pricing-card.quote-card').forEach((card) => tiltCard(card, 3));
     }
@@ -294,9 +293,9 @@
 
     /* ---------- 9. Magnetic buttons and links ---------- */
     if (finePointer) {
-      qa('.button:not(.form-submit), .nav-cta, .price-button, .back-top, .service-link, .text-link').forEach((el) => {
+      qa('.button:not(.form-submit), .nav-cta, .price-button, .back-top, .text-link').forEach((el) => {
         el.classList.add('magnetic');
-        const strength = el.matches('.service-link, .text-link, .back-top') ? 0.25 : 0.35;
+        const strength = el.matches('.text-link, .back-top') ? 0.25 : 0.35;
         const clamp = gsap.utils.clamp(-14, 14);
         const mx = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
         const my = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });

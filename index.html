@@ -32,7 +32,6 @@
   <script src="script.js" defer></script>
   <script src="motion.js" defer></script>
   <script src="chatbot.js" defer></script>
-  <script type="module" src="tools3d.js"></script>
   <script type="module" src="feature3d.js"></script>
   <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"VideoObject","name":"DelcoTech Software & AI Solutions","description":"Websites, custom software and AI, made around your business. A one-minute film from DelcoTech.","thumbnailUrl":["https://delcotech.co.za/assets/video/delcotech-ad-poster.jpg"],"uploadDate":"2026-11-04T21:30:00+02:00","duration":"PT1M9S","contentUrl":"https://delcotech.co.za/assets/video/delcotech-ad-web.mp4","embedUrl":"https://delcotech.co.za/#showreel"}
@@ -145,9 +144,60 @@
       <div class="container">
         <div class="section-header">
           <div><div class="eyebrow"><span class="dash"></span> WHAT WE DO</div><h2 id="services-title">The right tools.<br><span class="text-soft">For the way you work.</span></h2></div>
-          <p class="section-intro">From your first website to a custom system that saves hours of admin, we make digital feel easy. We also build chatbots and custom AI for your business.</p>
         </div>
-        <div class="service-grid" id="services-list"></div>
+        <div class="showcase-list">
+          <article class="showcase" aria-labelledby="showcase-websites">
+            <div class="showcase-head">
+              <h3 id="showcase-websites"><span class="showcase-num" aria-hidden="true">01</span>Custom websites</h3>
+              <p>Designed and coded from scratch, made to stand out on every screen. Hosting and care included if you want it.</p>
+              <a class="text-link" href="#contact" data-project="Business website">Let’s talk <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="showcase-frame">
+              <video class="showcase-video" muted loop playsinline preload="none" width="1920" height="1080"
+                aria-label="A custom website being built for desktop and phone"
+                poster="assets/video/services/websites.jpg"
+                data-phone-src="assets/video/services/websites-vertical.mp4"
+                data-phone-poster="assets/video/services/websites-vertical.jpg">
+                <source src="assets/video/services/websites.mp4" type="video/mp4">
+              </video>
+              <button class="showcase-toggle" type="button" aria-label="Pause video" hidden><span aria-hidden="true"></span></button>
+            </div>
+          </article>
+          <article class="showcase" aria-labelledby="showcase-software">
+            <div class="showcase-head">
+              <h3 id="showcase-software"><span class="showcase-num" aria-hidden="true">02</span>Custom software</h3>
+              <p>Phone and desktop apps that update in real time, plus integrations so your systems talk to each other.</p>
+              <a class="text-link" href="#contact" data-project="Custom software">Let’s talk <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="showcase-frame">
+              <video class="showcase-video" muted loop playsinline preload="none" width="1920" height="1080"
+                aria-label="A café ordering app: an order placed on a phone appears live on the desktop dashboard"
+                poster="assets/video/services/software.jpg"
+                data-phone-src="assets/video/services/software-vertical.mp4"
+                data-phone-poster="assets/video/services/software-vertical.jpg">
+                <source src="assets/video/services/software.mp4" type="video/mp4">
+              </video>
+              <button class="showcase-toggle" type="button" aria-label="Pause video" hidden><span aria-hidden="true"></span></button>
+            </div>
+          </article>
+          <article class="showcase" aria-labelledby="showcase-ai">
+            <div class="showcase-head">
+              <h3 id="showcase-ai"><span class="showcase-num" aria-hidden="true">03</span>Custom AI</h3>
+              <p>Chatbots that answer your customers, and AI that reads images, understands voice or handles whatever your business needs.</p>
+              <a class="text-link" href="#contact" data-project="AI chatbot or custom AI">Let’s talk <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="showcase-frame">
+              <video class="showcase-video" muted loop playsinline preload="none" width="1920" height="1080"
+                aria-label="Custom AI tools: a chat assistant, image recognition and voice understanding"
+                poster="assets/video/services/ai.jpg"
+                data-phone-src="assets/video/services/ai-vertical.mp4"
+                data-phone-poster="assets/video/services/ai-vertical.jpg">
+                <source src="assets/video/services/ai.mp4" type="video/mp4">
+              </video>
+              <button class="showcase-toggle" type="button" aria-label="Pause video" hidden><span aria-hidden="true"></span></button>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -221,6 +271,6 @@
   </main>
 
   <footer class="site-footer"><div class="container"><div class="footer-main"><a class="brand" href="#top" aria-label="Back to top"><span class="brand-symbol" aria-hidden="true"><span>D</span><i></i></span><span class="brand-wordmark"><strong>DelcoTech</strong><small>SOFTWARE &amp; AI SOLUTIONS</small></span></a><p>Good ideas. Better digital.<br>Made for the businesses going places.</p><a href="#top" class="back-top">Back to top ↑</a></div><div class="footer-bottom"><span id="footer-text">© DelcoTech Software &amp; AI Solutions</span><span>Websites • Software • AI • Support</span></div></div></footer>
-  <noscript><div class="noscript-note">JavaScript is required to display the service and pricing cards and to prepare enquiries.</div></noscript>
+  <noscript><div class="noscript-note">JavaScript is required to play the service videos, display the pricing cards and prepare enquiries.</div></noscript>
 </body>
 </html>

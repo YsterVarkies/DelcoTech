@@ -72,15 +72,26 @@ With "reduce motion" switched on in the operating system, none of this runs
 and the page shows as normal. If the GSAP files fail to load, the page still
 works without the animation.
 
-3D TOOLS (THREE.JS)
--------------------
-tools3d.js draws a small 3D model on each service card: a laptop (custom
-software), a chip (custom AI), a chat bubble (chatbots), a browser window
-(websites), connected nodes (API) and a shield (hosting & care). They float and
-turn toward the mouse. On hover the laptop opens, the chat bubble pops up like a
-new message, and the pieces of the browser window pop out and settle back. Only models on
-screen are drawn. Without WebGL the original icons are shown instead.
+WHAT WE DO: SERVICE VIDEOS
+--------------------------
+The "What we do" section shows a short silent loop from the DelcoTech film for
+each service: custom websites, custom software and custom AI. Computers get
+the 16:9 clips; phones held upright get the 9:16 clips from the vertical film.
+A clip only plays while it is on screen, and each has a pause button. With
+"reduce motion" switched on, the clips wait on their poster until played.
+Files are in assets/video/services/ (name.mp4 + name.jpg poster, and
+name-vertical.mp4 + name-vertical.jpg for phones). They were cut from the 2K
+masters (times in seconds, horizontal / vertical):
+  websites  16.75-20.85 / 16.70-20.85
+  software  33.70-41.60 / 33.70-41.60
+  ai        43.60-53.95 / 43.60-53.90
+with: ffmpeg -ss START -to END -i MASTER.mp4 -an -vf "scale=1920:1080:flags=lanczos"
+  -r 60 -c:v libx264 -preset slower -tune animation -crf 19 -x264-params aq-mode=3
+  -movflags +faststart OUT.mp4
+(scale=1080:1920 for the vertical clips; posters are 1920x1080 / 1080x1920).
 
+3D LOGO (THREE.JS)
+------------------
 feature3d.js shows the DelcoTech logo in 3D (sky tile, navy D, white dot) in
 the circle of the About section. It spins in when scrolled into view, floats,
 and turns toward the mouse.
@@ -91,7 +102,7 @@ index.html       Homepage and sections
 style.css        Full responsive design
 script.js        Editable site content and interactions
 motion.js        GSAP animations, hover and mouse effects
-tools3d.js       Three.js 3D models on the six service cards
+assets/video/services/  Service clips and posters for "What we do"
 feature3d.js     Three.js 3D DelcoTech logo in the About circle
 assets/vendor/three/  Three.js 0.186 (three.module.js and three.core.js)
 assets/vendor/   GSAP library files used by motion.js
