@@ -35,21 +35,16 @@ const CONFIG = {
 
 const $ = id => document.getElementById(id);
 const element = (tag,className,text) => {const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
-function jumpToContact(type,packageName){
-  const select=$('project-type');
-  if(type)select.value=type;
-  const detail=$('project-details');
-  if(packageName && !detail.value.trim()) detail.value='I’m interested in the '+packageName+' package. Please tell me more.';
-  $('contact').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
-}
 
 function renderPrices(source,targetId){
   const isPlan=source===CONFIG.plans;
   source.forEach(item=>{
     const card=element('article','pricing-card'+(item.quote?' quote-card featured':(item.featured?' featured':'')));
     const list=element('ul','included');item.items.forEach(line=>list.append(element('li','',line)));
-    const link=element('a','price-button',item.quote?'Request your quote ↗':(isPlan?'Enquire about this plan ↗':'Choose this package ↗'));link.href='#contact';
-    link.addEventListener('click',()=>{const details=$('project-details');$('project-type').value=item.type;if(!details.value.trim())details.value=item.quote?item.message:'I’m interested in '+item.title+(isPlan?' monthly plan':' package')+'. Please send me a quote.';});
+    const link=element('a','price-button',item.quote?'Request your quote ↗':(isPlan?'Enquire about this plan ↗':'Choose this package ↗'));
+    link.href='#enquiry';
+    link.dataset.project=item.type;
+    link.dataset.projectMessage=item.quote?item.message:'I’m interested in '+item.title+(isPlan?' monthly plan':' package')+'. Please send me a quote.';
     if(item.quote){
       const copy=element('div','quote-copy'),actions=element('div','quote-actions');
       copy.append(element('h4','',item.title),element('p','package-summary',item.text));actions.append(list,link);card.append(copy,actions);
@@ -69,15 +64,12 @@ function validWhatsapp(num){return /^\d{10,15}$/.test(num) && !/^(\d)\1+$/.test(
 function availableChannels(){return {whatsapp:validWhatsapp(CONFIG.whatsapp.trim()),email:validEmail(CONFIG.email.trim())};}
 function formatPhone(num){return num.startsWith('27')?'+27 '+num.slice(2,4)+' '+num.slice(4,7)+' '+num.slice(7):'+'+num;}
 function configureContact(){
-  const channels=availableChannels(),whatsappLink=$('whatsapp-link'),phoneLink=$('phone-link'),emailLink=$('email-link'),help=$('form-help'),button=$('submit-enquiry');
+  const channels=availableChannels(),whatsappLink=$('whatsapp-link'),phoneLink=$('phone-link'),emailLink=$('email-link');
   whatsappLink.hidden=!channels.whatsapp;
   phoneLink.hidden=!channels.whatsapp;
   emailLink.hidden=!channels.email;
   if(channels.whatsapp){whatsappLink.href='https://wa.me/'+CONFIG.whatsapp;whatsappLink.target='_blank';whatsappLink.rel='noopener noreferrer';phoneLink.href='tel:+'+CONFIG.whatsapp;phoneLink.textContent=formatPhone(CONFIG.whatsapp);}
   if(channels.email){emailLink.href='mailto:'+CONFIG.email;emailLink.textContent=CONFIG.email;}
-  if(channels.whatsapp){button.firstChild.textContent='Send via WhatsApp ';help.textContent='Submitting opens WhatsApp with your message ready to send.';}
-  else if(channels.email){button.firstChild.textContent='Send via Email ';help.textContent='Submitting opens your email app with your enquiry ready to send.';}
-  else{button.firstChild.textContent='Prepare my enquiry ';help.textContent='Preview mode: the site owner needs to add a WhatsApp number or email before enquiries can be sent.';}
   return channels;
 }
 function prepareMessage(data){return 'Hi DelcoTech!\n\nMy name is '+data.get('name').trim()+'.\nContact: '+data.get('contact').trim()+'\nInterested in: '+data.get('project')+'\n\nProject details:\n'+data.get('message').trim();}
@@ -91,30 +83,98 @@ function setBrandText(node,text){
   });
 }
 
-function updateStatus(message,isError=false){const status=$('form-status');status.textContent=message;status.classList.toggle('error',isError);status.hidden=false;}
+function updateStatus(message){const status=$('form-status');status.textContent=message;status.hidden=false;}
 
 function setupEnquiry(){
-  const channels=configureContact(),form=$('enquiry'),sendEmailButton=$('send-email');
-  let sendViaEmail=false;
-  sendEmailButton.hidden=!channels.email;
-  sendEmailButton.addEventListener('click',()=>{sendViaEmail=true;form.requestSubmit();});
-  form.addEventListener('submit',event=>{
-    event.preventDefault();$('form-status').hidden=true;$('copy-fallback').hidden=true;
-    const viaEmail=sendViaEmail;sendViaEmail=false;
-    let valid=true;
-    ['name','contact-info','project-details'].forEach(id=>{const input=$(id);const filled=input.value.trim().length>0;input.classList.toggle('invalid',!filled);if(!filled){valid=false;}});
-    if(!valid){updateStatus('Please complete your name, contact details and project description.',true);form.querySelector('.invalid').focus();return;}
+  const channels = configureContact();
+  const form = $('enquiry');
+  const steps = [...form.querySelectorAll('.enquiry-step')];
+  const project = form.elements.project;
+  const details = $('project-details');
+  const back = $('enquiry-back');
+  const sendEmail = $('send-email');
+  const error = $('enquiry-error');
+  const lastStep = steps.length - 1;
+  const sendLabel = channels.whatsapp ? 'Send via WhatsApp' : channels.email ? 'Send via email' : 'Prepare my enquiry';
+  $('form-help').textContent = channels.whatsapp || channels.email
+    ? 'Your enquiry opens as a draft for you to send.'
+    : 'Your enquiry will be ready to copy.';
+  let currentStep = 0;
+  let prefilledDetails = '';
+
+  function showStep(index, moveFocus = true){
+    currentStep = index;
+    const isLast = index === lastStep;
+    steps.forEach((step, i) => { step.hidden = i !== index; });
+    $('enquiry-step-count').textContent = 'Step ' + (index + 1) + ' of ' + steps.length;
+    $('enquiry-progress').value = index + 1;
+    back.hidden = index === 0;
+    sendEmail.hidden = !isLast || !channels.whatsapp || !channels.email;
+    $('enquiry-submit-label').textContent = isLast ? sendLabel : 'Continue';
+    $('enquiry-submit-arrow').textContent = isLast && (channels.whatsapp || channels.email) ? '↗' : '→';
+    $('form-help').hidden = !isLast;
+    error.hidden = true;
+    $('form-status').hidden = true;
+    $('copy-fallback').hidden = true;
+    if (moveFocus) steps[index].querySelector('h4').focus();
+  }
+
+  back.addEventListener('click', () => showStep(currentStep - 1));
+  document.querySelectorAll('a[data-project]').forEach(link => {
+    link.addEventListener('click', () => {
+      project.value = link.dataset.project;
+      if (!details.value.trim() || details.value === prefilledDetails) {
+        prefilledDetails = link.dataset.projectMessage || '';
+        details.value = prefilledDetails;
+      }
+      showStep(0, false);
+    });
+  });
+  form.addEventListener('change', event => {
+    if (event.target.name === 'project' && prefilledDetails && details.value === prefilledDetails) {
+      details.value = '';
+      prefilledDetails = '';
+    }
+  });
+  form.addEventListener('input', event => {
+    error.hidden = true;
+    event.target.removeAttribute('aria-invalid');
+  });
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const invalidStep = steps.slice(0, currentStep + 1).findIndex(step => {
+      const input = step.querySelector('input, textarea');
+      return input.type === 'radio' ? !project.value : !input.value.trim();
+    });
+    if (invalidStep !== -1) {
+      showStep(invalidStep, false);
+      const step = steps[invalidStep];
+      const input = step.querySelector('input, textarea');
+      if (input.type !== 'radio') input.setAttribute('aria-invalid', 'true');
+      error.textContent = step.dataset.error;
+      error.hidden = false;
+      input.focus();
+      return;
+    }
+    if (currentStep < lastStep) {
+      showStep(currentStep + 1);
+      return;
+    }
+    $('form-status').hidden = true;
+    $('copy-fallback').hidden = true;
+    const viaEmail = event.submitter === sendEmail;
     const data=new FormData(form),message=prepareMessage(data);
     if(channels.whatsapp&&!viaEmail){const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(message);window.location.href=url;updateStatus('Your WhatsApp message is ready. Please press Send in WhatsApp to finish.');}
     else if(channels.email){const subject='New DelcoTech project enquiry – '+data.get('project');window.location.href='mailto:'+encodeURIComponent(CONFIG.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);updateStatus('Your email app should open with a ready-to-send enquiry. Please send it to finish.');}
     else{$('copy-message').value=message;$('copy-fallback').hidden=false;updateStatus('Preview only: the site owner has not added real contact details yet. Your message is ready to copy.');}
   });
-  ['name','contact-info','project-details'].forEach(id=>$(id).addEventListener('input',()=>$(id).classList.remove('invalid')));
   $('copy-button').addEventListener('click',async()=>{
     const text=$('copy-message').value;
     try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);updateStatus('Message copied to clipboard.');return;}}catch(err){}
     $('copy-message').focus();$('copy-message').select();updateStatus('Select the message above and use Copy to save it.');
   });
+  showStep(0, false);
 }
 function setupMobileNavigation(){
   const toggle=$('menu-toggle'),nav=$('nav-links');
@@ -178,7 +238,6 @@ function setupShowcase(){
       else{video.dataset.paused='1';video.pause();}
     });
   });
-  document.querySelectorAll('.showcase [data-project]').forEach(link=>link.addEventListener('click',()=>{$('project-type').value=link.dataset.project;}));
   if(!('IntersectionObserver' in window))return;
   const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
     const video=entry.target;

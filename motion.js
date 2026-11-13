@@ -287,8 +287,6 @@
 
     /* ---------- 8. Contact and footer ---------- */
     revealOnce('.contact-card', { x: 70, rotation: 2, opacity: 0, duration: 1.3, ease: EASE, clearProps: 'transform' }, '.contact-section', 'top 75%');
-    revealOnce('.contact-card .form-heading > *, .contact-card .field', { y: 18, opacity: 0, duration: 0.8, stagger: 0.05, ease: EASE, delay: 0.35 }, '.contact-section', 'top 75%');
-    revealOnce('.contact-card .form-submit', { opacity: 0, duration: 0.8, ease: EASE, delay: 0.5 }, '.contact-section', 'top 75%');
     revealOnce('.footer-main > *', { y: 24, opacity: 0, duration: 0.9, stagger: 0.08, ease: EASE }, '.site-footer', 'top 95%');
 
     /* ---------- 9. Magnetic buttons and links ---------- */
